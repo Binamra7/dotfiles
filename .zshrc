@@ -14,6 +14,8 @@ source ~/.zsh_profile
 
 alias nv=nvim
 
+alias cd..="cd .."
+
 # alias ide =  tmux split-window -v -l 30%
 #             tmux split-window -h -l 66%
 #             tmux split-window -h -l 50%
