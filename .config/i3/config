@@ -109,6 +109,19 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# assign workspace for applications
+assign [class="Gonme-terminal"] 1
+assign [class="firefox-aurora"] 2
+assign [class="Google-chrome"] 3
+assign [class="Spotify"] 10
+
+# autostart applications
+exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
+exec --no-startup-id i3-msg 'workspace 2; exec /opt/firefox/firefox'
+exec --no-startup-id i3-msg 'workspace 3; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace 10; exec spotify'
+
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
