@@ -11,9 +11,9 @@
 general {
     interval 		= 15
     colors 			= true
-    color_good      = '#88b090'
+    color_good      = '#12ff12'
     color_degraded  = '#ccdc90'
-    color_bad       = '#e89393'
+    color_bad       = '#ee5352'
 }
 
 order += "battery 0"
