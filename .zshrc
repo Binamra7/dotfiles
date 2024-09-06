@@ -17,10 +17,19 @@ alias nv=nvim
 alias cd..="cd .."
 alias bat=batcat
 alias copy='xclip -selection clipboard <'
-# bat copy to clipboard
-# alias batc="bat "$1" | xclip -selection clipboard && echo "File copied to clipboard""
+alias reload!='. ~/.zshrc'
 
-# alias ide ="tmux split-window -v -l 30% && tmux split-window -h -l 66% && tmux split-window -h -l 50%"
+alias ls='lsd'
+alias ll='lsd -l'
+alias la='lsd -la'
+alias lh='lsd -lh'
+alias lla='lsd -lha'
+alias lr='lsd -R'
+alias lra='lsd -laR'
+alias lss='lsd -l --size'
+alias lt='lsd -lt'
+alias ltree='lsd --tree'
+alias ltreea='lsd --tree -a'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
