@@ -12,13 +12,15 @@ source $ZSH/oh-my-zsh.sh
 
 source ~/.zsh_profile
 
+# aliases
 alias nv=nvim
-
 alias cd..="cd .."
+alias bat=batcat
+alias copy='xclip -selection clipboard <'
+# bat copy to clipboard
+# alias batc="bat "$1" | xclip -selection clipboard && echo "File copied to clipboard""
 
-# alias ide =  tmux split-window -v -l 30%
-#             tmux split-window -h -l 66%
-#             tmux split-window -h -l 50%
+# alias ide ="tmux split-window -v -l 30% && tmux split-window -h -l 66% && tmux split-window -h -l 50%"
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme

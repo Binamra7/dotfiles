@@ -5,6 +5,16 @@ discipline.cowboy()
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- Use Tab for autocompletion instead of Enter
+local opts2 = { silent = true, noremap = true, expr = true, replace_keycodes = false }
+keymap.set(
+	"i",
+	"<TAB>",
+	'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
+	opts2
+)
+keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts2)
+
 -- Remap Normal Mode to J and K
 keymap.set("i", "jk", "<ESC>", opts)
 
@@ -69,6 +79,8 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
+keymap.set("i", "<Tab>", 'pumvisible() and "\\<C-y>" or "\\<Tab>"', opts)
+
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
 	vim.diagnostic.goto_next()
@@ -81,3 +93,36 @@ end)
 keymap.set("n", "<leader>i", function()
 	require("craftzdog.lsp").toggleInlayHints()
 end)
+
+-- vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() and "\\<C-y>" or "\\<Tab>"', {expr = true, noremap = true})
+
+local t = function(str)
+	return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+	if vim.fn.pumvisible() == 1 then
+		return t("<C-n>")
+	elseif vim.fn.call("vsnip#available", { 1 }) == 1 then
+		return t("<Plug>(vsnip-expand-or-jump)")
+	else
+		return t("<Tab>")
+	end
+end
+_G.s_tab_complete = function()
+	if vim.fn.pumvisible() == 1 then
+		return t("<C-p>")
+	elseif vim.fn.call("vsnip#jumpable", { -1 }) == 1 then
+		return t("<Plug>(vsnip-jump-prev)")
+	else
+		return t("<S-Tab>")
+	end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
