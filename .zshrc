@@ -14,10 +14,12 @@ source ~/.zsh_profile
 
 # aliases
 alias nv=nvim
+#alias nv="kitty --config ~/.config/kitty/nvim.conf nvim"
 alias cd..="cd .."
 alias bat=batcat
 alias copy='xclip -selection clipboard <'
 alias reload!='. ~/.zshrc'
+alias sudo='sudo '
 
 alias ls='lsd'
 alias ll='lsd -l'
@@ -30,6 +32,7 @@ alias lss='lsd -l --size'
 alias lt='lsd -lt'
 alias ltree='lsd --tree'
 alias ltreea='lsd --tree -a'
+
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme

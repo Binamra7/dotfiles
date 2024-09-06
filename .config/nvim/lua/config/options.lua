@@ -6,6 +6,7 @@ vim.opt.fileencoding = "utf-8"
 
 vim.opt.number = true
 
+vim.opt.guifont = "JetBrains Mono"
 vim.opt.title = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -43,6 +44,7 @@ vim.opt.formatoptions:append({ "r" })
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
-if vim.fn.has("nvim-0.8") == 1 then
-	vim.opt.cmdheight = 0
-end
+-- Change font when Neovim starts
+vim.cmd([[autocmd VimEnter * silent !kitty @ set-font-size 12 --name JetBrains Mono]])
+-- Revert font when Neovim exits
+vim.cmd([[autocmd VimLeave * silent !kitty @ set-font-size 12 --name Hack NF]])
