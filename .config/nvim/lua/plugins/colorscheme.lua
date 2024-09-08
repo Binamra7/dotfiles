@@ -1,9 +1,6 @@
 return {
 	{
-		-- "craftzdog/solarized-osaka.nvim",
-		"catppuccin/nvim",
-		name = "catppuccin",
-		lazy = true,
+		"craftzdog/solarized-osaka.nvim",
 		priority = 1000,
 		opts = function()
 			return {

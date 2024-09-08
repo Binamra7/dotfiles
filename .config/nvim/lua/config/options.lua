@@ -1,4 +1,3 @@
--- set space-bar as the leader key
 vim.g.mapleader = " "
 
 vim.opt.encoding = "utf-8"
@@ -6,7 +5,6 @@ vim.opt.fileencoding = "utf-8"
 
 vim.opt.number = true
 
-vim.opt.guifont = "JetBrains Mono"
 vim.opt.title = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -25,7 +23,7 @@ vim.opt.smarttab = true
 vim.opt.breakindent = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.wrap = false -- No Wrap lines
+vim.opt.wrap = true -- No Wrap lines
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ "*/node_modules/*" })
@@ -43,8 +41,3 @@ vim.opt.formatoptions:append({ "r" })
 
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
-
--- Change font when Neovim starts
-vim.cmd([[autocmd VimEnter * silent !kitty @ set-font-size 12 --name JetBrains Mono]])
--- Revert font when Neovim exits
-vim.cmd([[autocmd VimLeave * silent !kitty @ set-font-size 12 --name Hack NF]])
