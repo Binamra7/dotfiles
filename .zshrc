@@ -33,6 +33,7 @@ alias lt='lsd -lt'
 alias ltree='lsd --tree'
 alias ltreea='lsd --tree -a'
 
+alias ff='/opt/firefox/firefox'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
