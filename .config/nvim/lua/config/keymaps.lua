@@ -59,11 +59,6 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Diagnostics
-keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
-end, opts)
-
 keymap.set("n", "<leader>i", function()
 	require("binamrag.lsp").toggleInlayHints()
 end)

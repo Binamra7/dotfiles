@@ -14,7 +14,13 @@ source ~/.zsh_profile
 
 # aliases
 alias nv=nvim
-#alias nv="kitty --config ~/.config/kitty/nvim.conf nvim"
+alias python=python3
+
+# firefox
+alias ff='/opt/firefox/firefox'
+alias firefox=ff
+alias ffs='ff --search'
+
 alias cd..="cd .."
 alias bat=batcat
 alias copy='xclip -selection clipboard <'
@@ -35,6 +41,14 @@ alias ltreea='lsd --tree -a'
 
 alias ff='/opt/firefox/firefox'
 
+alias lock='i3lock -c 000000'
+
+alias xc='xclip -selection clipboard'
+
+# Brightness control
+alias bu='sudo brightnessctl set 50000'
+alias bd='sudo brightnessctl set 5000'
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
@@ -48,3 +62,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+
+# Start the SSH agent and add the GitLab key
+eval "$(ssh-agent -s)" >/dev/null 2>&1
+ssh-add ~/.ssh/gitlab-bajra >/dev/null 2>&1

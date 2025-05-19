@@ -94,4 +94,20 @@ return {
 			table.insert(opts.sources, { name = "emoji" })
 		end,
 	},
+	{
+		"github/copilot.vim",
+		lazy = false, -- load on startup
+	},
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"suketa/nvim-dap-ruby",
+		},
+		config = function()
+			require("dap-ruby").setup()
+		end,
+	},
+	{
+		"olimorris/neotest-rspec",
+	},
 }

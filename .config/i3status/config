@@ -9,7 +9,7 @@
 ###############################################################################
 
 general {
-    interval 		= 15
+    interval 		= 1
     colors 			= true
     color_good      = '#12ff12'
     color_degraded  = '#ccdc90'

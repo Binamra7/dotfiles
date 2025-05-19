@@ -15,7 +15,7 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 2
 vim.opt.expandtab = true
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 vim.opt.shell = "zsh"
 vim.opt.backupskip = { "/tmp/*", "/private/tmp/*" }
 vim.opt.inccommand = "split"
@@ -43,3 +43,10 @@ vim.opt.formatoptions:append({ "r" })
 
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+
+--Ruby
+-- LSP Server to use for Ruby.
+-- Set to "solargraph" to use solargraph instead of ruby_lsp.
+--vim.g.lazyvim_ruby_lsp = "ruby_lsp"
+vim.g.lazyvim_ruby_lsp = "solargraph"
+vim.g.lazyvim_ruby_formatter = "rubocop"

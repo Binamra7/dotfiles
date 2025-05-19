@@ -11,6 +11,7 @@ return {
 				"graphql",
 				"http",
 				"java",
+				"ruby",
 				"scss",
 				"sql",
 				"tsx",
