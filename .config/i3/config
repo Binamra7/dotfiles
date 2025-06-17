@@ -9,7 +9,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -179,8 +179,8 @@ exec --no-startup-id redshift
 exec --no-startup-id feh --bg-fill ~/.images/nice-blue-background.png
 
 # fix touchpad scrolling and tapping in i3
-exec xinput set-prop 11 "libinput Natural Scrolling Enabled" 1
-exec xinput set-prop 11 "libinput Tapping Enabled" 1
+exec xinput set-prop 13 "libinput Natural Scrolling Enabled" 1
+exec xinput set-prop 13 "libinput Tapping Enabled" 1
 
 exec --no-startup-id notify-send "Welcome back $USER!" -i ~/.images/icons8-dog-100.png
 exec --no-startup-id ./i3BatteryWarning
