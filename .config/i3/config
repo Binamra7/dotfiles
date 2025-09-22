@@ -94,8 +94,15 @@ bindsym $mod+Shift+0 move container to workspace 10
 assign [class="Gonme-terminal"] 1
 assign [class="firefox-dev"] 2
 assign [class="Google-chrome"] 3
-assign [class="Spotify"] 10
-assign [class="discord"] 9
+assign [class="Org.gnome.Nautilus"] 4
+assign [class="Postman"] 5
+assign [class="obsidian"] 9
+assign [class="Mattermost"] 10
+
+# External monitor setup
+workspace 2 output HDMI-1
+workspace 3 output HDMI-1
+workspace 10 output HDMI-1
 
 # autostart applications
 exec --no-startup-id i3-msg 'workspace 1; exec kitty'
@@ -180,7 +187,9 @@ exec --no-startup-id feh --bg-fill ~/.images/nice-blue-background.png
 
 # fix touchpad scrolling and tapping in i3
 exec xinput set-prop 13 "libinput Natural Scrolling Enabled" 1
+exec xinput set-prop 11 "libinput Natural Scrolling Enabled" 1
 exec xinput set-prop 13 "libinput Tapping Enabled" 1
+exec xinput set-prop 11 "libinput Tapping Enabled" 1
 
 exec --no-startup-id notify-send "Welcome back $USER!" -i ~/.images/icons8-dog-100.png
 exec --no-startup-id ./i3BatteryWarning
