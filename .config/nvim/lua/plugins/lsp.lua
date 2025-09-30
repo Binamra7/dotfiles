@@ -14,6 +14,7 @@ return {
 				"css-lsp",
 				"erb-formatter",
 				"erb-lint",
+				"solargraph",
 			})
 		end,
 	},
@@ -34,10 +35,11 @@ return {
 			}
 		end,
 		opts = {
-			inlay_hints = { enabled = false },
+			inlay_hints = { enabled = true },
 			---@type lspconfig.options
 			servers = {
 				cssls = {},
+				solargraph = {},
 				tailwindcss = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
@@ -145,21 +147,6 @@ return {
 							},
 						},
 					},
-				},
-				ruby_lsp = {
-					enabled = lsp == "ruby_lsp",
-				},
-				solargraph = {
-					enabled = lsp == "solargraph",
-				},
-				rubocop = {
-					-- If Solargraph and Rubocop are both enabled as an LSP,
-					-- diagnostics will be duplicated because Solargraph
-					-- already calls Rubocop if it is installed
-					enabled = formatter == "rubocop" and lsp ~= "solargraph",
-				},
-				standardrb = {
-					enabled = formatter == "standardrb",
 				},
 			},
 			setup = {},

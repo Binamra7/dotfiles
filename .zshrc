@@ -70,3 +70,21 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Start the SSH agent and add the GitLab key
 eval "$(ssh-agent -s)" >/dev/null 2>&1
 ssh-add ~/.ssh/gitlab-bajra >/dev/null 2>&1
+ssh-add ~/.ssh/gitlab-local>/dev/null 2>&1
+ssh-add ~/.ssh/id_ed25519>/dev/null 2>&1
+
+# Set the default editor to nvim
+export EDITOR=nvim
+
+
+# Load Angular CLI autocompletion.
+# source <(ng completion script)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVIM_LOG_FILE=/dev/null
+
+
+# External Display
+alias hdmi='xrandr --output HDMI-1 --right-of eDP-1 --auto'
+alias hdmioff='xrandr --output HDMI-1 --off'

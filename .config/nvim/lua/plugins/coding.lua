@@ -88,16 +88,14 @@ return {
 	},
 
 	{
-		"nvim-cmp",
-		dependencies = { "hrsh7th/cmp-emoji" },
-		opts = function(_, opts)
-			table.insert(opts.sources, { name = "emoji" })
-		end,
+		"hrsh7th/nvim-cmp",
+		opts = {},
 	},
-	{
-		"github/copilot.vim",
-		lazy = false, -- load on startup
-	},
+	-- {
+	-- 	"github/copilot.vim",
+	-- 	lazy = false, -- load on startup
+	-- },
+	-- "copilot.vim": { "branch": "release", "commit": "f3d66c148aa60ad04c0a21d3e0a776459de09eb2" },
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
@@ -109,5 +107,13 @@ return {
 	},
 	{
 		"olimorris/neotest-rspec",
+	},
+	{
+		"sphamba/smear-cursor.nvim",
+		opts = {
+			stiffness = 0.8,
+			trailing_stiffness = 0.5,
+			distance_stop_animating = 0.5,
+		},
 	},
 }
