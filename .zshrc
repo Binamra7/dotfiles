@@ -46,8 +46,9 @@ alias lock='i3lock -c 000000'
 alias xc='xclip -selection clipboard'
 
 # Brightness control
-alias bu='sudo brightnessctl set 50000'
-alias bd='sudo brightnessctl set 5000'
+alias bmax='sudo brightnessctl set 96000'
+alias bmid='sudo brightnessctl set 40000'
+alias bmin='sudo brightnessctl set 5000'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
