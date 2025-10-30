@@ -62,33 +62,3 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 keymap.set("n", "<leader>i", function()
 	require("craftzdog.lsp").toggleInlayHints()
 end)
-
-local cmp = require("cmp")
-
-cmp.setup({
-	mapping = cmp.mapping.preset.insert({
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.confirm({ select = true })
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-})
-
--- local cmp = require("cmp")
---
--- cmp.setup({
--- 	mapping = {
--- 		["<Tab>"] = cmp.mapping.confirm({ select = true }),
--- 	},
--- })

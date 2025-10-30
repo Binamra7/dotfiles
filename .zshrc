@@ -88,3 +88,10 @@ export NVIM_LOG_FILE=/dev/null
 # External Display
 alias hdmi='xrandr --output HDMI-1 --right-of eDP-1 --auto'
 alias hdmioff='xrandr --output HDMI-1 --off'
+
+export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/bajra/.rvm/bin:/opt/nvim-linux-x86_64/bin
+
+
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/opt"
+

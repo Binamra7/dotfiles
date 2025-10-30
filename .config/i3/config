@@ -96,6 +96,7 @@ assign [class="firefox-dev"] 2
 assign [class="Google-chrome"] 3
 assign [class="Org.gnome.Nautilus"] 4
 assign [class="Postman"] 5
+assign [class="pgadmin4"] 6
 assign [class="obsidian"] 9
 assign [class="Mattermost"] 10
 
@@ -108,6 +109,7 @@ workspace 10 output HDMI-1
 exec --no-startup-id i3-msg 'workspace 1; exec kitty'
 exec --no-startup-id i3-msg 'workspace 2; exec /opt/firefox/firefox'
 exec --no-startup-id i3-msg 'workspace 3; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace 10; exec mattermost-desktop'
 
 
 # reload the configuration file
@@ -181,8 +183,13 @@ bindsym $mod+Shift+period exec systemctl suspend
 # rofi menu
 bindsym $mod+d exec rofi -show combi
 
+# lock 
+bindsym $mod+p exec i3lock -c 000000
+
+
+
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
-exec --no-startup-id redshift
+exec --no-startup-id redshift -l 27.7:85.3 -t 3500:3500 -g 1.0 -m randr -v
 exec --no-startup-id feh --bg-fill ~/.images/nice-blue-background.png
 
 # fix touchpad scrolling and tapping in i3

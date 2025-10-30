@@ -88,13 +88,20 @@ return {
 	},
 
 	{
-		"hrsh7th/nvim-cmp",
-		opts = {},
+		"blink-cmp",
+		config = function()
+			require("blink-cmp").setup({
+				tab_complete = true, -- Use Tab to complete
+				shift_tab_complete = true, -- Shift-Tab to go back
+				enter_confirm = true, -- Enter to confirm completion
+				sources = { "lsp", "buffer", "path" }, -- Your completion sources
+			})
+		end,
 	},
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	lazy = false, -- load on startup
-	-- },
+	{
+		"github/copilot.vim",
+		lazy = false, -- load on startup
+	},
 	-- "copilot.vim": { "branch": "release", "commit": "f3d66c148aa60ad04c0a21d3e0a776459de09eb2" },
 	{
 		"mfussenegger/nvim-dap",
