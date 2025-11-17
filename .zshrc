@@ -49,6 +49,9 @@ alias xc='xclip -selection clipboard'
 alias bu='sudo brightnessctl set 50000'
 alias bd='sudo brightnessctl set 5000'
 
+# Docker aliases
+alias d3u='docker compose down && docker compose up'
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
@@ -95,3 +98,5 @@ export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/loc
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:/opt"
 
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"

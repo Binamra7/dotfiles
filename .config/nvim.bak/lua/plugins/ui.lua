@@ -3,7 +3,6 @@ return {
 	{
 		"folke/noice.nvim",
 		opts = function(_, opts)
-			-- skip "No information available" notifications
 			table.insert(opts.routes, {
 				filter = {
 					event = "notify",
@@ -11,7 +10,6 @@ return {
 				},
 				opts = { skip = true },
 			})
-
 			local focused = true
 			vim.api.nvim_create_autocmd("FocusGained", {
 				callback = function()
@@ -35,6 +33,7 @@ return {
 
 			opts.commands = {
 				all = {
+					-- options for the message history that you get with `:Noice`
 					view = "split",
 					opts = { enter = true, format = "details" },
 					filter = {},
@@ -51,36 +50,25 @@ return {
 			})
 
 			opts.presets.lsp_doc_border = true
-
-			-- Fix invalid Treesitter "substitute" node
-			vim.api.nvim_create_autocmd("BufReadPost", {
-				callback = function()
-					local ts_ok, ts = pcall(require, "noice.text.treesitter")
-					if ts_ok then
-						-- remove "substitute" from queries
-						local ok, query = pcall(ts.get_query, "vim", "highlights")
-						if ok and query then
-							for i, node in ipairs(query:iter_nodes()) do
-								if node:match("substitute") then
-									query:remove_node(i)
-								end
-							end
-						end
-					end
-				end,
-			})
 		end,
 	},
 
 	{
 		"rcarriga/nvim-notify",
-		opts = { timeout = 5000 },
+		opts = {
+			timeout = 5000,
+		},
 	},
 
+	-- animations
 	{
-		"snacks.nvim",
-		opts = { scroll = { enabled = false } },
-		keys = {},
+		"echasnovski/mini.animate",
+		event = "VeryLazy",
+		opts = function(_, opts)
+			opts.scroll = {
+				enable = false,
+			}
+		end,
 	},
 
 	-- buffer line
@@ -94,6 +82,7 @@ return {
 		opts = {
 			options = {
 				mode = "tabs",
+				-- separator_style = "slant",
 				show_buffer_close_icons = false,
 				show_close_icon = false,
 			},
@@ -116,12 +105,15 @@ return {
 					},
 				},
 				window = { margin = { vertical = 0, horizontal = 1 } },
-				hide = { cursorline = true },
+				hide = {
+					cursorline = true,
+				},
 				render = function(props)
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
 					if vim.bo[props.buf].modified then
 						filename = "[+] " .. filename
 					end
+
 					local icon, color = require("nvim-web-devicons").get_icon_color(filename)
 					return { { icon, guifg = color }, { " " }, { filename } }
 				end,
@@ -129,36 +121,39 @@ return {
 		end,
 	},
 
-	-- statusline
-	{
-		"nvim-lualine/lualine.nvim",
-		opts = function(_, opts)
-			local LazyVim = require("lazyvim.util")
-			opts.sections.lualine_c[4] = {
-				LazyVim.lualine.pretty_path({
-					length = 0,
-					relative = "cwd",
-					modified_hl = "MatchParen",
-					directory_hl = "",
-					filename_hl = "Bold",
-					modified_sign = "",
-					readonly_icon = " 󰌾 ",
-				}),
-			}
-		end,
-	},
-
 	{
 		"folke/zen-mode.nvim",
 		cmd = "ZenMode",
 		opts = {
-			plugins = { gitsigns = true, tmux = true, kitty = { enabled = false, font = "+2" } },
+			plugins = {
+				gitsigns = true,
+				tmux = true,
+				kitty = { enabled = false, font = "+2" },
+			},
 		},
 		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
 	},
 
 	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		enabled = false,
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		opts = function(_, opts)
+			local logo = [[
+        ████████████████████████████████████████████████████████████████
+        █▌                                                            ▐█
+        █▌                                                            ▐█
+        █▌  ██████╗ ██╗███╗   ██╗ █████╗ ███╗   ███╗██████╗  █████╗   ▐█
+        █▌  ██╔══██╗██║████╗  ██║██╔══██╗████╗ ████║██╔══██╗██╔══██╗  ▐█
+        █▌  ██████╔╝██║██╔██╗ ██║███████║██╔████╔██║██████╔╝███████║  ▐█
+        █▌  ██╔══██╗██║██║╚██╗██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║  ▐█
+        █▌  ██████╔╝██║██║ ╚████║██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║  ▐█
+        █▌  ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝  ▐█
+        █▌                                                            ▐█
+        █▌                                                            ▐█
+        ████████████████████████████████████████████████████████████████
+      ]]
+			logo = string.rep("\n", 8) .. logo .. "\n\n"
+			-- opts.config.header = vim.split(logo, "\n")
+		end,
 	},
 }

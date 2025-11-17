@@ -2,10 +2,11 @@ if vim.loader then
 	vim.loader.enable()
 end
 
-vim.cmd([[
-  highlight NeoTreeNormal guibg=NONE
-  highlight NeoTreeNormalNC guibg=NONE
-  highlight NeoTreeEndOfBuffer guibg=NONE
-]])
+_G.dd = function(...)
+	require("util.debug").dump(...)
+end
+vim.print = _G.dd
 
 require("config.lazy")
+
+vim.opt.clipboard:append("unnamed")

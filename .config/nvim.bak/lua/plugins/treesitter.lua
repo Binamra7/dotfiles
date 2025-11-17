@@ -3,24 +3,21 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
 		opts = {
 			ensure_installed = {
-				"cmake",
 				"cpp",
 				"css",
 				"gitignore",
-				"go",
+				"graphql",
 				"http",
+				"java",
+				"ruby",
 				"scss",
 				"sql",
-				"ruby",
-				"erb",
+				"tsx",
+				"javascript",
+				"typescript",
 			},
-
-			-- matchup = {
-			-- 	enable = true,
-			-- },
 
 			-- https://github.com/nvim-treesitter/playground#query-linter
 			query_linter = {
@@ -49,8 +46,7 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local TS = require("nvim-treesitter")
-			TS.setup(opts)
+			require("nvim-treesitter.configs").setup(opts)
 
 			-- MDX
 			vim.filetype.add({

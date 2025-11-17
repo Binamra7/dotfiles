@@ -1,19 +1,4 @@
 return {
-	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
-	{
-		"danymat/neogen",
-		keys = {
-			{
-				"<leader>cc",
-				function()
-					require("neogen").generate({})
-				end,
-				desc = "Neogen Comment",
-			},
-		},
-		opts = { snippet_engine = "luasnip" },
-	},
-
 	-- Incremental rename
 	{
 		"smjonas/inc-rename.nvim",
@@ -21,27 +6,9 @@ return {
 		config = true,
 	},
 
-	-- Refactoring tool
-	{
-		"ThePrimeagen/refactoring.nvim",
-		keys = {
-			{
-				"<leader>r",
-				function()
-					require("refactoring").select_refactor()
-				end,
-				mode = "v",
-				noremap = true,
-				silent = true,
-				expr = false,
-			},
-		},
-		opts = {},
-	},
-
 	-- Go forward/backward with square brackets
 	{
-		"echasnovski/mini.bracketed",
+		"nvim-mini/mini.bracketed",
 		event = "BufReadPost",
 		config = function()
 			local bracketed = require("mini.bracketed")
@@ -78,49 +45,25 @@ return {
 		end,
 	},
 
+	-- copilot
 	{
-		"simrat39/symbols-outline.nvim",
-		keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-		cmd = "SymbolsOutline",
+		"zbirenbaum/copilot.lua",
 		opts = {
-			position = "right",
-		},
-	},
-
-	{
-		"blink-cmp",
-		config = function()
-			require("blink-cmp").setup({
-				tab_complete = true, -- Use Tab to complete
-				shift_tab_complete = true, -- Shift-Tab to go back
-				enter_confirm = true, -- Enter to confirm completion
-				sources = { "lsp", "buffer", "path" }, -- Your completion sources
-			})
-		end,
-	},
-	{
-		"github/copilot.vim",
-		lazy = false, -- load on startup
-	},
-	-- "copilot.vim": { "branch": "release", "commit": "f3d66c148aa60ad04c0a21d3e0a776459de09eb2" },
-	{
-		"mfussenegger/nvim-dap",
-		dependencies = {
-			"suketa/nvim-dap-ruby",
-		},
-		config = function()
-			require("dap-ruby").setup()
-		end,
-	},
-	{
-		"olimorris/neotest-rspec",
-	},
-	{
-		"sphamba/smear-cursor.nvim",
-		opts = {
-			stiffness = 0.8,
-			trailing_stiffness = 0.5,
-			distance_stop_animating = 0.5,
+			suggestion = {
+				auto_trigger = true,
+				keymap = {
+					accept = "<C-l>",
+					accept_word = "<M-l>",
+					accept_line = "<M-S-l>",
+					next = "<M-]>",
+					prev = "<M-[>",
+					dismiss = "<C-]>",
+				},
+			},
+			filetypes = {
+				markdown = true,
+				help = true,
+			},
 		},
 	},
 }
