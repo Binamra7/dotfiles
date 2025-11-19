@@ -13,6 +13,7 @@ return {
 		},
 	},
 
+	-- Shows color previwes
 	{
 		"brenoprata10/nvim-highlight-colors",
 		event = "BufReadPre",

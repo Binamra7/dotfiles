@@ -1,9 +1,16 @@
-local discipline = require("craftzdog.discipline")
-
-discipline.cowboy()
-
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+
+-- Remap Normal Mode to J and K
+keymap.set("i", "jk", "<ESC>", opts)
+
+-- Move selected line up
+keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
+keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+
+-- Move selected line down
+keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
+keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
@@ -23,17 +30,8 @@ keymap.set("v", "<Leader>D", '"_D')
 keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
 
--- Normal mode
-keymap.set("i", "jk", "<ESC>", opts)
-
--- Delete a word backwards
--- keymap.set("n", "dw", 'vb"_d')
-
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
 -- Disable continuations
 keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
@@ -61,19 +59,36 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Diagnostics
--- keymap.set("n", "<C-j>", function()
--- 	vim.diagnostic.goto_next()
--- end, opts)
+keymap.set("n", "<leader>i", function()
+	require("craftzdog.lsp").toggleInlayHints()
+end)
+
+local cmp = require("cmp")
+
+cmp.setup({
+	mapping = cmp.mapping.preset.insert({
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.confirm({ select = true })
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+})
+
+-- local cmp = require("cmp")
 --
--- keymap.set("n", "<leader>r", function()
--- 	require("craftzdog.hsl").replaceHexWithHSL()
--- end)
---
--- keymap.set("n", "<leader>i", function()
--- 	require("craftzdog.lsp").toggleInlayHints()
--- end)
---
--- vim.api.nvim_create_user_command("ToggleAutoformat", function()
--- 	require("craftzdog.lsp").toggleAutoformat()
--- end, {})
+-- cmp.setup({
+-- 	mapping = {
+-- 		["<Tab>"] = cmp.mapping.confirm({ select = true }),
+-- 	},
+-- })

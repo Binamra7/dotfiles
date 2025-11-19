@@ -12,6 +12,9 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
+				"solargraph", -- Ruby LSP
+				"rubocop", -- Ruby linter/formatter
+				"standardrb", -- optional alternative linter
 			})
 		end,
 	},
@@ -129,6 +132,21 @@ return {
 									continuation_indent_size = "2",
 								},
 							},
+						},
+					},
+				},
+				angularls = {
+					root_dir = function(...)
+						return require("lspconfig.util").root_pattern("angular.json", "project.json", ".git")(...)
+					end,
+				},
+				solargraph = {
+					settings = {
+						solargraph = {
+							diagnostics = true, -- shows linting errors/warnings
+							completion = true, -- auto-completion for Rails methods
+							formatting = true, -- optional code formatting
+							useBundler = true, -- use project's Gemfile if available
 						},
 					},
 				},

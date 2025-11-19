@@ -59,6 +59,21 @@ return {
 				},
 			})
 			vim.treesitter.language.register("markdown", "mdx")
+
+			-- Makes navigating models, controllers, and methods much easier
+			require("nvim-treesitter.configs").setup({
+				textobjects = {
+					select = {
+						enable = true,
+						keymaps = {
+							["af"] = "@function.outer", -- select function
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
+						},
+					},
+				},
+			})
 		end,
 	},
 }
