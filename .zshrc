@@ -61,11 +61,6 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 eval "$(zoxide init zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -94,9 +89,14 @@ alias hdmioff='xrandr --output HDMI-1 --off'
 
 export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/bajra/.rvm/bin:/opt/nvim-linux-x86_64/bin
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
 
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:/opt"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+

@@ -49,26 +49,6 @@ return {
 					end)
 				end,
 			})
-
-			opts.presets.lsp_doc_border = true
-
-			-- Fix invalid Treesitter "substitute" node
-			vim.api.nvim_create_autocmd("BufReadPost", {
-				callback = function()
-					local ts_ok, ts = pcall(require, "noice.text.treesitter")
-					if ts_ok then
-						-- remove "substitute" from queries
-						local ok, query = pcall(ts.get_query, "vim", "highlights")
-						if ok and query then
-							for i, node in ipairs(query:iter_nodes()) do
-								if node:match("substitute") then
-									query:remove_node(i)
-								end
-							end
-						end
-					end
-				end,
-			})
 		end,
 	},
 
