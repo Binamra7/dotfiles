@@ -12,9 +12,9 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
-				"solargraph", -- Ruby LSP
-				"rubocop", -- Ruby linter/formatter
-				"standardrb", -- optional alternative linter
+				-- "solargraph", -- Ruby LSP
+				-- "rubocop", -- Ruby linter/formatter
+				-- "standardrb", -- optional alternative linter
 			})
 		end,
 	},
