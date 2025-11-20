@@ -13,7 +13,7 @@ return {
 				"typescript-language-server",
 				"css-lsp",
 				-- "solargraph", -- Ruby LSP
-				-- "rubocop", -- Ruby linter/formatter
+				"rubocop", -- Ruby linter/formatter
 				-- "standardrb", -- optional alternative linter
 			})
 		end,
@@ -145,7 +145,7 @@ return {
 						solargraph = {
 							diagnostics = true, -- shows linting errors/warnings
 							completion = true, -- auto-completion for Rails methods
-							formatting = true, -- optional code formatting
+							-- formatting = true, -- optional code formatting
 							useBundler = true, -- use project's Gemfile if available
 						},
 					},
