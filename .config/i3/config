@@ -99,6 +99,7 @@ assign [class="Postman"] 5
 assign [class="pgadmin4"] 6
 assign [class="obsidian"] 9
 assign [class="Mattermost"] 10
+assign [class="Slack"] 10
 
 # External monitor setup
 workspace 2 output HDMI-1
@@ -110,6 +111,7 @@ exec --no-startup-id i3-msg 'workspace 1; exec kitty'
 exec --no-startup-id i3-msg 'workspace 2; exec /opt/firefox/firefox'
 exec --no-startup-id i3-msg 'workspace 3; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 10; exec mattermost-desktop'
+exec --no-startup-id i3-msg 'workspace 10; exec slack'
 
 
 # reload the configuration file
