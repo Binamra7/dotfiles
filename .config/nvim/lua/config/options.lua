@@ -42,11 +42,12 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 vim.opt.formatoptions:append({ "r" })
 
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
-vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
---Ruby
--- LSP Server to use for Ruby.
--- Set to "solargraph" to use solargraph instead of ruby_lsp.
---vim.g.lazyvim_ruby_lsp = "ruby_lsp"
--- vim.g.lazyvim_ruby_lsp = "solargraph"
-vim.g.lazyvim_ruby_formatter = "rubocop"
+-- Disable swap
+vim.opt.swapfile = false
+-- Disable backup
+vim.opt.backup = false
+-- Disable write backup
+vim.opt.writebackup = false
+-- Optional: disable persistent undo
+vim.opt.undofile = false

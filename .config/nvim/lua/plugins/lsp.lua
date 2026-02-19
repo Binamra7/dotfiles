@@ -12,9 +12,6 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
-				-- "solargraph", -- Ruby LSP
-				"rubocop", -- Ruby linter/formatter
-				-- "standardrb", -- optional alternative linter
 			})
 		end,
 	},
@@ -135,40 +132,28 @@ return {
 						},
 					},
 				},
-				angularls = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern("angular.json", "project.json", ".git")(...)
-					end,
-				},
-				solargraph = {
-					settings = {
-						solargraph = {
-							diagnostics = true, -- shows linting errors/warnings
-							completion = true, -- auto-completion for Rails methods
-							-- formatting = true, -- optional code formatting
-							useBundler = true, -- use project's Gemfile if available
-						},
-					},
-				},
 			},
 			setup = {},
 		},
 	},
 	{
 		"neovim/nvim-lspconfig",
-		opts = function()
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			vim.list_extend(keys, {
-				{
-					"gd",
-					function()
-						-- DO NOT RESUSE WINDOW
-						require("telescope.builtin").lsp_definitions({ reuse_win = false })
-					end,
-					desc = "Goto Definition",
-					has = "definition",
+		opts = {
+			servers = {
+				["*"] = { -- apply to all LSP servers
+					keys = {
+						{
+							"gd",
+							function()
+								-- DO NOT REUSE WINDOW
+								require("telescope.builtin").lsp_definitions({ reuse_win = false })
+							end,
+							desc = "Goto Definition",
+							has = "definition",
+						},
+					},
 				},
-			})
-		end,
+			},
+		},
 	},
 }
