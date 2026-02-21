@@ -5,6 +5,7 @@ return {
 		opts = {
 			-- The "Essential" list for Rails & JS development
 			ensure_installed = {
+				"angular", -- For Angular projects
 				"ruby",
 				"erb", -- Essential for Rails templates
 				"javascript",

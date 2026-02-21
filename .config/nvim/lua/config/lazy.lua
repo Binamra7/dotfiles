@@ -37,6 +37,10 @@ require("lazy").setup({
 		},
 		-- import your plugins
 		{ import = "plugins" },
+		-- Angular-related settings
+		{ import = "lazyvim.plugins.extras.lang.angular" },
+		{ import = "lazyvim.plugins.extras.lang.typescript" }, -- Essential for Angular
+		{ import = "lazyvim.plugins.extras.formatting.prettier" }, -- For template formatting
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.

@@ -92,3 +92,8 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 eval "$(rbenv init -)"
 
+
+# Terminal history manager
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
