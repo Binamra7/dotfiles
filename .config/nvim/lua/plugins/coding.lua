@@ -1,4 +1,11 @@
 return {
+	-- Incremental rename
+	{
+		"smjonas/inc-rename.nvim",
+		cmd = "IncRename",
+		config = true,
+	},
+
 	-- Go forward/backward with square brackets
 	{
 		"nvim-mini/mini.bracketed",
@@ -57,6 +64,17 @@ return {
 				markdown = true,
 				help = true,
 			},
+		},
+	},
+
+	-- undotree
+	{
+		"jiaoshijie/undotree",
+		opts = {
+			-- your options
+		},
+		keys = { -- load the plugin only when using it's keybinding:
+			{ "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
 		},
 	},
 }

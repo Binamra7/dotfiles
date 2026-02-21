@@ -1,65 +1,67 @@
 return {
-	-- tools
+	-- 1. Tools Management (Mason)
 	{
 		"mason-org/mason.nvim",
 		opts = function(_, opts)
+			-- Ensure the table exists so we don't get a Lua error
+			opts.ensure_installed = opts.ensure_installed or {}
+
+			-- Add your specific tools
 			vim.list_extend(opts.ensure_installed, {
-				"stylua",
-				"selene",
-				"luacheck",
-				"shellcheck",
-				"shfmt",
+				"solargraph",
+				"rubocop",
+				"vtsls",
+				"css-lsp", -- Corrected name
 				"tailwindcss-language-server",
-				"typescript-language-server",
-				"css-lsp",
+				"yaml-language-server",
+				"lua-language-server",
+				"stylua",
 			})
 		end,
 	},
 
-	-- lsp servers
+	-- 2. LSP Servers & Keymaps (Merged into one block)
 	{
 		"neovim/nvim-lspconfig",
 		opts = {
-			inlay_hints = { enabled = false },
-			---@type lspconfig.options
-			servers = {
-				cssls = {},
-				tailwindcss = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
+			inlay_hints = { enabled = true },
+			-- DECOMPRESSED KEYS: This is the correct way to add keys to LazyVim
+			keys = {
+				{
+					"gd",
+					function()
+						require("telescope.builtin").lsp_definitions({ reuse_win = false })
 					end,
+					desc = "Goto Definition",
 				},
-				tsserver = {
+			},
+			servers = {
+				-- RUBY / RAILS
+				solargraph = {
 					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
+						return require("lspconfig.util").root_pattern("Gemfile", ".git", ".")(...)
 					end,
-					single_file_support = false,
+					settings = {
+						solargraph = {
+							diagnostics = true,
+							useBundler = true,
+							formatting = false,
+						},
+					},
+				},
+				-- JAVASCRIPT & TYPESCRIPT
+				vtsls = {
 					settings = {
 						typescript = {
 							inlayHints = {
 								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
 							},
 						},
 					},
 				},
-				html = {},
+				cssls = {},
+				tailwindcss = {},
 				yamlls = {
 					settings = {
 						yaml = {
@@ -68,88 +70,9 @@ return {
 					},
 				},
 				lua_ls = {
-					-- enabled = false,
-					single_file_support = true,
 					settings = {
 						Lua = {
-							workspace = {
-								checkThirdParty = false,
-							},
-							completion = {
-								workspaceWord = true,
-								callSnippet = "Both",
-							},
-							misc = {
-								parameters = {
-									-- "--log-level=trace",
-								},
-							},
-							hint = {
-								enable = true,
-								setType = false,
-								paramType = true,
-								paramName = "Disable",
-								semicolon = "Disable",
-								arrayIndex = "Disable",
-							},
-							doc = {
-								privateName = { "^_" },
-							},
-							type = {
-								castNumberToInteger = true,
-							},
-							diagnostics = {
-								disable = { "incomplete-signature-doc", "trailing-space" },
-								-- enable = false,
-								groupSeverity = {
-									strong = "Warning",
-									strict = "Warning",
-								},
-								groupFileStatus = {
-									["ambiguity"] = "Opened",
-									["await"] = "Opened",
-									["codestyle"] = "None",
-									["duplicate"] = "Opened",
-									["global"] = "Opened",
-									["luadoc"] = "Opened",
-									["redefined"] = "Opened",
-									["strict"] = "Opened",
-									["strong"] = "Opened",
-									["type-check"] = "Opened",
-									["unbalanced"] = "Opened",
-									["unused"] = "Opened",
-								},
-								unusedLocalExclude = { "_*" },
-							},
-							format = {
-								enable = false,
-								defaultConfig = {
-									indent_style = "space",
-									indent_size = "2",
-									continuation_indent_size = "2",
-								},
-							},
-						},
-					},
-				},
-			},
-			setup = {},
-		},
-	},
-	{
-		"neovim/nvim-lspconfig",
-		opts = {
-			servers = {
-				["*"] = { -- apply to all LSP servers
-					keys = {
-						{
-							"gd",
-							function()
-								-- DO NOT REUSE WINDOW
-								require("telescope.builtin").lsp_definitions({ reuse_win = false })
-							end,
-							desc = "Goto Definition",
-							has = "definition",
+							diagnostics = { globals = { "vim" } },
 						},
 					},
 				},

@@ -1,52 +1,45 @@
 return {
-	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
-
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
+			-- The "Essential" list for Rails & JS development
 			ensure_installed = {
-				"cmake",
-				"cpp",
-				"css",
-				"gitignore",
-				"go",
-				"http",
-				"scss",
-				"sql",
 				"ruby",
-				"erb",
+				"erb", -- Essential for Rails templates
+				"javascript",
+				"typescript", -- Often used alongside JS
+				"html",
+				"css",
+				"json",
+				"yaml", -- For database.yml and config files
+				"lua", -- For your Nvim config itself
+				"markdown",
 			},
 
-			-- matchup = {
-			-- 	enable = true,
-			-- },
-
-			-- https://github.com/nvim-treesitter/playground#query-linter
-			query_linter = {
+			-- Enable the core features
+			highlight = {
 				enable = true,
-				use_virtual_text = true,
-				lint_events = { "BufWrite", "CursorHold" },
+				-- Setting this to true will run both treesitter and syntax highlighting.
+				-- Generally, keeping it false (default) is faster and cleaner.
+				additional_vim_regex_highlighting = false,
 			},
 
-			playground = {
+			indent = {
+				enable = true, -- Better indentation based on code structure
+			},
+			-- High-speed selection
+			incremental_selection = {
 				enable = true,
-				disable = {},
-				updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-				persist_queries = true, -- Whether the query persists across vim sessions
-				keybindings = {
-					toggle_query_editor = "o",
-					toggle_hl_groups = "i",
-					toggle_injected_languages = "t",
-					toggle_anonymous_nodes = "a",
-					toggle_language_display = "I",
-					focus_language = "f",
-					unfocus_language = "F",
-					update = "R",
-					goto_node = "<cr>",
-					show_help = "?",
+				keymaps = {
+					init_selection = "<C-space>", -- Start selecting code blocks
+					node_incremental = "<C-space>", -- Expand to the next scope (e.g., from variable to method)
+					scope_incremental = false,
+					node_decremental = "<bs>", -- Shrink selection (Backspace)
 				},
 			},
+			-- If you use 'windwp/nvim-ts-autotag', you'd enable it here:
+			-- autotag = { enable = true },
 		},
 		config = function(_, opts)
 			local TS = require("nvim-treesitter")

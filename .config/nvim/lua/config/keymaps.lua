@@ -1,60 +1,59 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
--- Remap Normal Mode to J and K
+-- Better Escape
 keymap.set("i", "jk", "<ESC>", opts)
 
--- Move selected line up
-keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
-keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+-- Move lines (Bubbling)
+-- Uses the move command which is more stable than :m
+keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", opts)
+keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", opts)
+keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", opts)
+keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
+keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
+keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
 
--- Move selected line down
-keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
-keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+-- Keep cursor centered when jumping/searching
+-- (Optional but highly recommended for Rails/JS)
+keymap.set("n", "n", "nzzzv", opts)
+keymap.set("n", "N", "Nzzzv", opts)
+keymap.set("n", "<C-d>", "<C-d>zz", opts)
+keymap.set("n", "<C-u>", "<C-u>zz", opts)
 
--- Do things without affecting the registers
+-- Register management (Black hole deletions)
 keymap.set("n", "x", '"_x')
-keymap.set("n", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>P", '"0P')
-keymap.set("v", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>c", '"_c')
-keymap.set("n", "<Leader>C", '"_C')
-keymap.set("v", "<Leader>c", '"_c')
-keymap.set("v", "<Leader>C", '"_C')
-keymap.set("n", "<Leader>d", '"_d')
-keymap.set("n", "<Leader>D", '"_D')
-keymap.set("v", "<Leader>d", '"_d')
-keymap.set("v", "<Leader>D", '"_D')
+keymap.set({ "n", "v" }, "<Leader>d", '"_d')
+keymap.set({ "n", "v" }, "<Leader>D", '"_D')
+keymap.set({ "n", "v" }, "<Leader>c", '"_c')
 
--- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+-- Paste logic: Keep the yanked text after pasting over a selection
+keymap.set("v", "p", '"_dP', opts) -- The ultimate "don't lose my yank" map
+keymap.set("n", "<Leader>p", '"0p', opts) -- Paste specifically from yank register
 
 -- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
+keymap.set("n", "<C-a>", "ggVG", opts)
 
--- Disable continuations
-keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
-keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
+-- Disable newline continuation comments
+-- This is a cleaner way to get a new line without auto-commenting
+keymap.set("n", "<Leader>o", "printf('o%s', ' <BS><Esc>')", { expr = true, desc = "New line below without comment" })
+keymap.set("n", "<Leader>O", "printf('O%s', ' <BS><Esc>')", { expr = true, desc = "New line above without comment" })
 
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
-
--- New tab
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
--- Split window
+-- Window Management
+-- LazyVim uses <C-hjkl> by default, but if you like 's' prefixes:
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
--- Move window
 keymap.set("n", "sh", "<C-w>h")
 keymap.set("n", "sk", "<C-w>k")
 keymap.set("n", "sj", "<C-w>j")
 keymap.set("n", "sl", "<C-w>l")
 
--- Resize window
-keymap.set("n", "<C-w><left>", "<C-w><")
-keymap.set("n", "<C-w><right>", "<C-w>>")
-keymap.set("n", "<C-w><up>", "<C-w>+")
-keymap.set("n", "<C-w><down>", "<C-w>-")
+-- Resizing with arrows
+keymap.set("n", "<C-w><left>", "<C-w><", opts)
+keymap.set("n", "<C-w><right>", "<C-w>>", opts)
+keymap.set("n", "<C-w><up>", "<C-w>+", opts)
+keymap.set("n", "<C-w><down>", "<C-w>-", opts)
+
+-- Dismiss all notifications (useful for long-running tasks or when you just want a clean slate)
+keymap.set("n", "<leader>un", function()
+	require("notify").dismiss({ silent = true, pending = true })
+end, { desc = "Dismiss All Notifications" })

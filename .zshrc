@@ -6,8 +6,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-plugins=(git)
-
 source $ZSH/oh-my-zsh.sh
 
 source ~/.zsh_profile
@@ -39,8 +37,6 @@ alias lt='lsd -lt'
 alias ltree='lsd --tree'
 alias ltreea='lsd --tree -a'
 
-alias ff='/opt/firefox/firefox'
-
 alias lock='i3lock -c 000000'
 
 alias xc='xclip -selection clipboard'
@@ -53,16 +49,11 @@ alias bd='sudo brightnessctl set 5000'
 alias d3u='docker compose down && docker compose up'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 eval "$(zoxide init zsh)"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 
 # Start the SSH agent and add the GitLab key
@@ -87,7 +78,7 @@ export NVIM_LOG_FILE=/dev/null
 alias hdmi='xrandr --output HDMI-1 --right-of eDP-1 --auto'
 alias hdmioff='xrandr --output HDMI-1 --off'
 
-export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/bajra/.rvm/bin:/opt/nvim-linux-x86_64/bin
+export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/opt/nvim-linux-x86_64/bin:/$HOME/.local/bin
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -98,5 +89,6 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:/opt"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 eval "$(rbenv init -)"
 
