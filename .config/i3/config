@@ -19,10 +19,20 @@ font pango:JetBrainsMono Nerd Font 12
 # GET DEM BORDERS OUT OF HEREc:w
 #
 # Thanks Childz
-for_window [class="^.*"] border pixel 1
-                          # class                 border  backgr. text    indicator child_border
-for_window [class="^.*"] client.focused          #77dd77 #285577 #ffffff #2e9ef4   #285577
+# for_window [class="^.*"] border pixel 1
+#                           # class                 border  backgr. text    indicator child_border
+# for_window [class="^.*"] client.focused          #77dd77 #285577 #ffffff #2e9ef4   #285577
+# 1. Set border to 0 instead of 1
+for_window [class="^.*"] border pixel 0
 
+# 2. THE CRITICAL ADDITION: This stops i3 from respecting terminal character grids.
+# This eliminates the gaps that show your wallpaper.
+for_window [class="^.*"] hints off
+
+# 3. Optional: If you want this ONLY for Ghostty and keep borders for others:
+# for_window [class="com.mitchellh.ghostty"] border pixel 0
+# for_window [class="com.mitchellh.ghostty"] hints off
+#
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -192,7 +202,7 @@ bindsym $mod+p exec i3lock -c 000000
 
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id redshift -l 27.7:85.3 -t 3500:3500 -g 1.0 -m randr -v
-exec --no-startup-id feh --bg-fill ~/.images/nice-blue-background.png
+exec --no-startup-id feh --bg-fill ~/.images/space_wallpaper.jpg
 
 # fix touchpad scrolling and tapping in i3
 exec xinput set-prop 13 "libinput Natural Scrolling Enabled" 1

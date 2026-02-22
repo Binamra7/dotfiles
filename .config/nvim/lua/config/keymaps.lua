@@ -31,12 +31,12 @@ keymap.set("v", "p", '"_dP', opts) -- The ultimate "don't lose my yank" map
 keymap.set("n", "<Leader>p", '"0p', opts) -- Paste specifically from yank register
 
 -- Select all
-keymap.set("n", "<C-a>", "ggVG", opts)
+-- keymap.set("n", "<C-a>", "ggVG", opts)
 
 -- Disable newline continuation comments
 -- This is a cleaner way to get a new line without auto-commenting
-keymap.set("n", "<Leader>o", "printf('o%s', ' <BS><Esc>')", { expr = true, desc = "New line below without comment" })
-keymap.set("n", "<Leader>O", "printf('O%s', ' <BS><Esc>')", { expr = true, desc = "New line above without comment" })
+keymap.set("n", "<Leader>o", "o<C-u>", { desc = "New line below" })
+keymap.set("n", "<Leader>O", "O<C-u>", { desc = "New line above" })
 
 -- Window Management
 -- LazyVim uses <C-hjkl> by default, but if you like 's' prefixes:
