@@ -37,7 +37,7 @@ for_window [class="^.*"] hints off
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec ghostty
 
 bindsym $mod+Shift+q kill
 
@@ -117,7 +117,7 @@ workspace 3 output HDMI-1
 workspace 10 output HDMI-1
 
 # autostart applications
-exec --no-startup-id i3-msg 'workspace 1; exec kitty'
+exec --no-startup-id i3-msg 'workspace 1; exec ghostty'
 exec --no-startup-id i3-msg 'workspace 2; exec /opt/firefox/firefox'
 exec --no-startup-id i3-msg 'workspace 3; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 10; exec mattermost-desktop'

@@ -32,7 +32,7 @@ background-opacity = 0.9
 window-decoration = false
 
 adjust-box-thickness           = -1
-adjust-cursor-thickness        = 2
+adjust-cursor-thickness        = 0
 adjust-overline-thickness      = -1
 adjust-strikethrough-thickness = -1
 adjust-underline-thickness     = -1
