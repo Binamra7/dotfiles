@@ -44,12 +44,6 @@ return {
 			opts.presets.lsp_doc_border = true
 		end,
 	},
-
-	{
-		"rcarriga/nvim-notify",
-		opts = { timeout = 3000 }, -- Slights shorter timeout for less clutter
-	},
-
 	-- Bufferline: Tabs/Buffers bar
 	{
 		"akinsho/bufferline.nvim",
@@ -89,7 +83,10 @@ return {
 	{
 		"folke/snacks.nvim",
 		opts = {
-			scroll = { enabled = false },
+			scroll = {
+				enabled = true,
+			},
+			explorer = { replace_netrw = false },
 		},
 	},
 

@@ -13,13 +13,6 @@ keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
 keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
 keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
 
--- Keep cursor centered when jumping/searching
--- (Optional but highly recommended for Rails/JS)
-keymap.set("n", "n", "nzzzv", opts)
-keymap.set("n", "N", "Nzzzv", opts)
-keymap.set("n", "<C-d>", "<C-d>zz", opts)
-keymap.set("n", "<C-u>", "<C-u>zz", opts)
-
 -- Register management (Black hole deletions)
 keymap.set("n", "x", '"_x')
 keymap.set({ "n", "v" }, "<Leader>d", '"_d')
