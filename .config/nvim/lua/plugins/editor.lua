@@ -4,12 +4,41 @@ return {
 		"folke/flash.nvim",
 		-- @type Flash.Config
 		opts = {
-			search = {
-				forward = true,
-				multi_window = false,
-				wrap = false,
-				incremental = true,
+			modes = {
+				char = {
+					enabled = false,
+				},
+				search = {
+					forward = true,
+					multi_window = false,
+					wrap = false,
+					incremental = true,
+				},
 			},
+		},
+		keys = {
+			-- 1. Map 'f' to the Flash Search (usually on 's')
+			{
+				"f",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+
+			-- 2. Map 'S' to the Flash Treesitter Search
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+
+			-- 3. UNBIND the default 's' so you get the native 's' back
+			{ "s", mode = { "n", "x", "o" }, false },
 		},
 	},
 

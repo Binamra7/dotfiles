@@ -45,8 +45,3 @@ keymap.set("n", "<C-w><left>", "<C-w><", opts)
 keymap.set("n", "<C-w><right>", "<C-w>>", opts)
 keymap.set("n", "<C-w><up>", "<C-w>+", opts)
 keymap.set("n", "<C-w><down>", "<C-w>-", opts)
-
--- Dismiss all notifications (useful for long-running tasks or when you just want a clean slate)
-keymap.set("n", "<leader>un", function()
-	require("notify").dismiss({ silent = true, pending = true })
-end, { desc = "Dismiss All Notifications" })

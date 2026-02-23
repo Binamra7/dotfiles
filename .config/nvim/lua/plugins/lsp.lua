@@ -25,7 +25,6 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			inlay_hints = { enabled = true },
-			-- DECOMPRESSED KEYS: This is the correct way to add keys to LazyVim
 			keys = {
 				{
 					"gd",
@@ -33,22 +32,12 @@ return {
 						require("telescope.builtin").lsp_definitions({ reuse_win = false })
 					end,
 					desc = "Goto Definition",
+					has = "definition",
 				},
 			},
 			servers = {
 				-- RUBY / RAILS
-				solargraph = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern("Gemfile", ".git", ".")(...)
-					end,
-					settings = {
-						solargraph = {
-							diagnostics = true,
-							useBundler = true,
-							formatting = false,
-						},
-					},
-				},
+				solargraph = {},
 				-- JAVASCRIPT & TYPESCRIPT
 				vtsls = {
 					settings = {

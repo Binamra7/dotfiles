@@ -211,4 +211,5 @@ exec xinput set-prop 13 "libinput Tapping Enabled" 1
 exec xinput set-prop 11 "libinput Tapping Enabled" 1
 
 exec --no-startup-id notify-send "Welcome back $USER!" -i ~/.images/icons8-dog-100.png
+exec_always --no-startup-id dunst
 exec --no-startup-id ./i3BatteryWarning
