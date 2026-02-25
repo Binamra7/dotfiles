@@ -27,7 +27,7 @@ return {
 						return not focused
 					end,
 				},
-				view = "notify_send",
+				view = "snacks",
 				opts = { stop = false },
 			})
 
@@ -51,12 +51,6 @@ return {
 
 			opts.presets.lsp_doc_border = true
 		end,
-	},
-	{
-		"rcarriga/nvim-notify",
-		opts = {
-			timeout = 5000,
-		},
 	},
 	-- Bufferline: Tabs/Buffers bar
 	{
@@ -102,7 +96,7 @@ return {
 			},
 			explorer = { replace_netrw = false },
 			notifier = {
-				enabled = false,
+				enabled = true,
 				timeout = 3000,
 			},
 		},

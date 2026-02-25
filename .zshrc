@@ -48,6 +48,9 @@ alias bd='sudo brightnessctl set 5000'
 # Docker aliases
 alias d3u='docker compose down && docker compose up'
 
+# tmux aliases
+alias tmk='tmux kill-session -t'
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
