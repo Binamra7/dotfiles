@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.g.localleader = " "
+vim.g.maplocalleader = "\\"
 
 -- Neovim defaults to utf-8; these are usually redundant but harmless
 vim.opt.encoding = "utf-8"
@@ -11,14 +11,17 @@ vim.opt.title = true
 vim.opt.mouse = ""
 vim.opt.scrolloff = 20
 vim.opt.laststatus = 3 -- Global statusline (better for splits)
-vim.opt.cmdheight = 0 -- Hides command line when not in use
+vim.opt.cmdheight = 0  -- Hides command line when not in use
 vim.opt.showcmd = true
 
 -- Search Logic
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
-vim.opt.smartcase = true -- Search is case-sensitive if it contains a capital
+vim.opt.smartcase = true     -- Search is case-sensitive if it contains a capital
 vim.opt.inccommand = "split" -- Preview substitutions in a split window
+
+-- copy between nvim and other applications
+vim.opt.clipboard = "unnamedplus"
 
 -- Indentation (Tailored for Ruby/JS)
 vim.opt.expandtab = true
