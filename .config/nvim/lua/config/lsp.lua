@@ -54,6 +54,16 @@ vim.lsp.config("*", {
 	capabilities = require("blink.cmp").get_lsp_capabilities(),
 })
 
+-- Launch ruby-lsp through mise so it runs under the project's Ruby
+-- (.ruby-version; idiomatic version files enabled for ruby in mise settings).
+-- Plain `ruby-lsp` ran under mise `latest` and died with RubyVersionMismatch
+-- in projects pinning an older Ruby. The ruby-lsp gem must be installed in
+-- each mise Ruby. NOTE: this must be an explicit vim.lsp.config() call — an
+-- lsp/ruby_lsp.lua file loses the cmd key to nvim-lspconfig's own file.
+vim.lsp.config("ruby_lsp", {
+	cmd = { "mise", "x", "--", "ruby-lsp" },
+})
+
 vim.lsp.enable({
 	-- Ruby / Rails: ruby-lsp (gem-installed via mise; auto-loads its Rails
 	-- addon in Rails apps). Replaced solargraph, whose gem indexing blocked
