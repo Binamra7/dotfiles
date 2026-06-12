@@ -5,17 +5,30 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin")
 
--- Native messages/cmdline UI, "ui2" (replaces noice.nvim): floating
--- cmdline/messages, no press-enter prompts, g< opens the message pager.
--- Experimental but core; see :h ui2.
-local ui2_ok, ui2_err = pcall(function()
-	require("vim._core.ui2").enable()
-end)
-if not ui2_ok then
-	vim.schedule(function()
-		vim.notify("ui2 unavailable: " .. tostring(ui2_err), vim.log.levels.WARN)
-	end)
-end
+-- Noice: floating cmdline popup + message routing.
+-- Native ui2 was tried first, but with cmdheight=0 it temporarily sets
+-- cmdheight=1 while typing a command (hardcoded), shifting the buffer;
+-- cmdheight=1 wastes a row. Noice's ext_cmdline popup needs neither.
+require("noice").setup({
+	cmdline = { view = "cmdline_popup" },
+	notify = { enabled = true }, -- routes through vim.notify → snacks notifier
+	lsp = {
+		override = {
+			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+			["vim.lsp.util.stylize_markdown"] = true,
+		},
+	},
+	presets = {
+		bottom_search = true,
+		lsp_doc_border = true,
+	},
+	routes = {
+		{
+			filter = { event = "notify", find = "No information available" },
+			opts = { skip = true },
+		},
+	},
+})
 
 -- Icons (also mocks nvim-web-devicons for telescope/lualine/oil)
 require("mini.icons").setup()

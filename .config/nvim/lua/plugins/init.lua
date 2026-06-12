@@ -60,6 +60,8 @@ vim.pack.add({
 	{ src = gh("jiaoshijie/undotree") },
 
 	-- ui
+	{ src = gh("folke/noice.nvim") },
+	{ src = gh("MunifTanjim/nui.nvim") }, -- noice dependency
 	{ src = gh("folke/which-key.nvim") },
 	{ src = gh("nvim-mini/mini.icons") },
 	{ src = gh("folke/snacks.nvim") },
