@@ -85,6 +85,6 @@ nvim --headless FILE "+lua vim.defer_fn(function() ... vim.cmd('qa!') end, 15000
 
 ## History / removed things
 
-- Removed vs LazyVim: trouble, todo-comments, grug-far, mini.ai, lazydev, noice's message views (kept cmdline), `<leader>u*` toggle family (`<leader>u` = undotree here)
+- Removed vs LazyVim: trouble, grug-far, mini.ai, lazydev, noice's message views (kept cmdline), `<leader>u*` toggle family (`<leader>u` = undotree here). todo-comments was re-added later (`;d` picker, `]t`/`[t`).
 - Old lazy.nvim plugin data may still exist at `~/.local/share/nvim/lazy` (unused, deletable)
 - diffview.nvim + gitsigns blame replaced LazyVim's git pickers; `<leader>gd` toggles diffview, `<leader>gb` is per-line blame

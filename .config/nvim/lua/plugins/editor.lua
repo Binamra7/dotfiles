@@ -82,6 +82,9 @@ require("diffview").setup({
 -- Sessions ---------------------------------------------------------------
 require("persistence").setup()
 
+-- Highlight TODO/FIXME/HACK/NOTE in comments (]t/[t + ;d in keymaps) ------
+require("todo-comments").setup()
+
 -- Color previews (hex / tailwind classes) ----------------------------------
 require("nvim-highlight-colors").setup({
 	render = "background",

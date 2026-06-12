@@ -146,6 +146,10 @@
       "rev": "f7c673b8e46e8f233ff581d3624a517d33a7e264",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
+    "todo-comments.nvim": {
+      "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
+      "src": "https://github.com/folke/todo-comments.nvim"
+    },
     "undotree": {
       "rev": "0e6d41d55ad147407e4ba00a292973de8db0b836",
       "src": "https://github.com/jiaoshijie/undotree"

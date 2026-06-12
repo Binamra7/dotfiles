@@ -128,6 +128,13 @@ end, { desc = "Recent Files" })
 keymap.set("n", "<leader>fP", function()
 	builtin().find_files({ cwd = vim.fn.stdpath("data") .. "/site/pack/core/opt" })
 end, { desc = "Find Plugin File" })
+keymap.set("n", ";d", "<cmd>TodoTelescope<cr>", { desc = "Todo Comments" })
+keymap.set("n", "]t", function()
+	require("todo-comments").jump_next()
+end, { desc = "Next Todo Comment" })
+keymap.set("n", "[t", function()
+	require("todo-comments").jump_prev()
+end, { desc = "Prev Todo Comment" })
 keymap.set("n", "sf", function()
 	require("telescope").extensions.file_browser.file_browser({
 		path = "%:p:h",

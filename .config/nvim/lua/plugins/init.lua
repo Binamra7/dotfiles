@@ -52,6 +52,7 @@ vim.pack.add({
 	{ src = gh("sindrets/diffview.nvim") },
 	{ src = gh("folke/persistence.nvim") },
 	{ src = gh("brenoprata10/nvim-highlight-colors") },
+	{ src = gh("folke/todo-comments.nvim") },
 
 	-- coding helpers
 	{ src = gh("monaqa/dial.nvim") },
