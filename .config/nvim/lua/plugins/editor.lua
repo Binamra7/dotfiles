@@ -109,7 +109,13 @@ require("gitsigns").setup({
 })
 
 -- Diffview: proper diff UI (:DiffviewOpen) and file history ---------------
-require("diffview").setup({})
+require("diffview").setup({
+	keymaps = {
+		view = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } } },
+		file_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } } },
+		file_history_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } } },
+	},
+})
 
 -- Sessions -------------------------------------------------------------
 require("persistence").setup()
