@@ -15,7 +15,9 @@ vim.opt.title = true
 vim.opt.scrolloff = 20
 vim.opt.sidescrolloff = 8
 vim.opt.laststatus = 3 -- global statusline
-vim.opt.cmdheight = 0 -- hide command line when not in use (extui handles it)
+-- A permanently reserved cmdline row: with cmdheight=0, ui2 inserts the row
+-- only while a command is typed, which shifts the buffer up by one line.
+vim.opt.cmdheight = 1
 vim.opt.showmode = false -- lualine shows the mode
 vim.opt.pumheight = 10
 vim.opt.winborder = "rounded" -- border for all floating windows (hover, etc.)
