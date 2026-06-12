@@ -119,11 +119,10 @@ require("which-key").setup({
 	},
 })
 
--- Zen mode
+-- Zen mode (<leader>z in config/keymaps.lua)
 require("zen-mode").setup({
 	plugins = {
 		gitsigns = true,
 		tmux = { enabled = true },
 	},
 })
-vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })

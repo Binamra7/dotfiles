@@ -65,9 +65,6 @@ require("conform").setup({
 		return { timeout_ms = 3000, lsp_format = "fallback" }
 	end,
 })
-vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-	require("conform").format({ lsp_format = "fallback" })
-end, { desc = "Format" })
 
 -- Auto pairs ---------------------------------------------------------------
 require("mini.pairs").setup()
@@ -81,7 +78,7 @@ require("mini.bracketed").setup({
 	treesitter = { suffix = "n" },
 })
 
--- Better increment/decrement (<C-a>/<C-x>) ---------------------------------
+-- Better increment/decrement (<C-a>/<C-x> in config/keymaps.lua) -------------
 local augend = require("dial.augend")
 require("dial.config").augends:register_group({
 	default = {
@@ -93,15 +90,6 @@ require("dial.config").augends:register_group({
 		augend.constant.new({ elements = { "let", "const" } }),
 	},
 })
-vim.keymap.set("n", "<C-a>", function()
-	return require("dial.map").inc_normal()
-end, { expr = true, desc = "Increment" })
-vim.keymap.set("n", "<C-x>", function()
-	return require("dial.map").dec_normal()
-end, { expr = true, desc = "Decrement" })
 
--- Undotree -----------------------------------------------------------------
+-- Undotree (<leader>u in config/keymaps.lua) --------------------------------
 require("undotree").setup()
-vim.keymap.set("n", "<leader>u", function()
-	require("undotree").toggle()
-end, { desc = "Undotree" })
