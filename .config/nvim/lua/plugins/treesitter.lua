@@ -1,58 +1,55 @@
-return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		opts = {
-			-- The "Essential" list for Rails & JS development
-			ensure_installed = {
-				"angular", -- For Angular projects
-				"ruby",
-				"erb", -- Essential for Rails templates
-				"javascript",
-				"typescript", -- Often used alongside JS
-				"html",
-				"css",
-				"json",
-				"yaml", -- For database.yml and config files
-				"lua", -- For your Nvim config itself
-				"markdown",
-			},
+local TS = require("nvim-treesitter")
 
-			-- Enable the core features
-			highlight = {
-				enable = true,
-				-- Setting this to true will run both treesitter and syntax highlighting.
-				-- Generally, keeping it false (default) is faster and cleaner.
-				additional_vim_regex_highlighting = false,
-			},
+TS.setup({})
 
-			indent = {
-				enable = true, -- Better indentation based on code structure
-			},
-			-- High-speed selection
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-space>", -- Start selecting code blocks
-					node_incremental = "<C-space>", -- Expand to the next scope (e.g., from variable to method)
-					scope_incremental = false,
-					node_decremental = "<bs>", -- Shrink selection (Backspace)
-				},
-			},
-			-- If you use 'windwp/nvim-ts-autotag', you'd enable it here:
-			-- autotag = { enable = true },
-		},
-		config = function(_, opts)
-			local TS = require("nvim-treesitter")
-			TS.setup(opts)
-
-			-- MDX
-			vim.filetype.add({
-				extension = {
-					mdx = "mdx",
-				},
-			})
-			vim.treesitter.language.register("markdown", "mdx")
-		end,
-	},
+-- Parsers beyond the bundled ones (c, lua, vim, vimdoc, query, markdown are built in)
+local ensure_installed = {
+	"angular",
+	"bash",
+	"css",
+	"diff",
+	"embedded_template", -- ERB
+	"html",
+	"javascript",
+	"jsdoc",
+	"json",
+	"lua",
+	"luadoc",
+	"markdown",
+	"markdown_inline",
+	"query",
+	"regex",
+	"ruby",
+	"scss",
+	"toml",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"yaml",
 }
+TS.install(ensure_installed) -- async, skips already-installed parsers
+
+-- Enable highlighting + indentation whenever a parser exists for the filetype
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
+	callback = function(ev)
+		local lang = vim.treesitter.language.get_lang(ev.match)
+		if lang and vim.treesitter.language.add(lang) then
+			vim.treesitter.start(ev.buf, lang)
+			vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
+})
+
+-- Angular templates
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+	group = vim.api.nvim_create_augroup("user_angular_template", { clear = true }),
+	pattern = { "*.component.html", "*.container.html" },
+	callback = function()
+		pcall(vim.treesitter.start, 0, "angular")
+	end,
+})
+
+-- Auto close/rename HTML tags (html, erb, angular, jsx)
+require("nvim-ts-autotag").setup({})

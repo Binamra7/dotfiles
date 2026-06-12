@@ -1,116 +1,73 @@
-return {
-	-- Noice: Messages, Cmdline, and Popupmenu
-	{
-		"folke/noice.nvim",
-		opts = function(_, opts)
-			table.insert(opts.routes, {
-				filter = {
-					event = "notify",
-					find = "No information available",
-				},
-				opts = { skip = true },
-			})
-			local focused = true
-			vim.api.nvim_create_autocmd("FocusGained", {
-				callback = function()
-					focused = true
-				end,
-			})
-			vim.api.nvim_create_autocmd("FocusLost", {
-				callback = function()
-					focused = false
-				end,
-			})
-			table.insert(opts.routes, 1, {
-				filter = {
-					cond = function()
-						return not focused
-					end,
-				},
-				view = "snacks",
-				opts = { stop = false },
-			})
+-- Colorscheme
+require("catppuccin").setup({
+	flavour = "mocha",
+	transparent_background = true,
+})
+vim.cmd.colorscheme("catppuccin")
 
-			opts.commands = {
-				all = {
-					-- options for the message history that you get with `:Noice`
-					view = "split",
-					opts = { enter = true, format = "details" },
-					filter = {},
-				},
-			}
+-- Native messages/cmdline UI, "ui2" (replaces noice.nvim): floating
+-- cmdline/messages, no press-enter prompts, g< opens the message pager.
+-- Experimental but core; see :h ui2.
+local ui2_ok, ui2_err = pcall(function()
+	require("vim._core.ui2").enable()
+end)
+if not ui2_ok then
+	vim.schedule(function()
+		vim.notify("ui2 unavailable: " .. tostring(ui2_err), vim.log.levels.WARN)
+	end)
+end
 
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "markdown",
-				callback = function(event)
-					vim.schedule(function()
-						require("noice.text.markdown").keys(event.buf)
-					end)
-				end,
-			})
+-- Icons (also mocks nvim-web-devicons for telescope/lualine/oil)
+require("mini.icons").setup()
+MiniIcons.mock_nvim_web_devicons()
 
-			opts.presets.lsp_doc_border = true
-		end,
+-- Snacks: notifier, dashboard, smooth scroll, lazygit, git browse
+require("snacks").setup({
+	bigfile = { enabled = true },
+	notifier = { enabled = true, timeout = 3000 },
+	dashboard = { enabled = true },
+	scroll = { enabled = true },
+	lazygit = {},
+	gitbrowse = {},
+})
+
+-- Statusline
+require("lualine").setup({
+	options = {
+		theme = "auto", -- derives from the active colorscheme
+		globalstatus = true,
+		disabled_filetypes = { statusline = { "snacks_dashboard" } },
 	},
-	-- Bufferline: Tabs/Buffers bar
-	{
-		"akinsho/bufferline.nvim",
-		event = "VeryLazy",
-		keys = {
-			{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next Buffer" },
-			{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev Buffer" },
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch" },
+		lualine_c = {
+			"diagnostics",
+			{ "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+			{ "filename", path = 1, symbols = { modified = " ●", readonly = " 󰌾" } },
 		},
-		opts = {
-			options = {
-				mode = "buffers", -- Changed from "tabs" to "buffers" to see open files
-				show_buffer_close_icons = false,
-				show_close_icon = false,
-				separator_style = "thin", -- Clean look
-				always_show_bufferline = false, -- Only show if more than 1 buffer
-			},
-		},
+		lualine_x = { "diff" },
+		lualine_y = { "progress" },
+		lualine_z = { "location" },
 	},
+})
 
-	-- Lualine: Statusline
-	{
-		"nvim-lualine/lualine.nvim",
-		opts = function(_, opts)
-			local LazyVim = require("lazyvim.util")
-			-- Better way to replace the path component
-			opts.sections.lualine_c[4] = LazyVim.lualine.pretty_path({
-				length = 0,
-				relative = "cwd",
-				modified_hl = "MatchParen",
-				filename_hl = "Bold",
-				readonly_icon = " 󰌾 ",
-			})
-		end,
+-- Buffer bar
+require("bufferline").setup({
+	options = {
+		mode = "buffers",
+		show_buffer_close_icons = false,
+		show_close_icon = false,
+		separator_style = "thin",
+		always_show_bufferline = false, -- only show with 2+ buffers
 	},
+})
 
-	-- Snacks: Dashboard and Scroll
-	{
-		"folke/snacks.nvim",
-		opts = {
-			scroll = {
-				enabled = true,
-			},
-			explorer = { replace_netrw = false },
-			notifier = {
-				enabled = true,
-				timeout = 3000,
-			},
-		},
+-- Zen mode
+require("zen-mode").setup({
+	plugins = {
+		gitsigns = true,
+		tmux = { enabled = true },
 	},
-
-	{
-		"folke/zen-mode.nvim",
-		cmd = "ZenMode",
-		opts = {
-			plugins = {
-				gitsigns = true,
-				tmux = { enabled = true },
-			},
-		},
-		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-	},
-}
+})
+vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })

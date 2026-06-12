@@ -1,0 +1,95 @@
+-- Native LSP setup (:h lsp-config). Server definitions come from
+-- nvim-lspconfig's lsp/<server>.lua files; project overrides live in
+-- <config>/lsp/<server>.lua and are merged automatically.
+
+-- Mason: pure binary installer (no mason-lspconfig needed) ------------------
+require("mason").setup()
+
+local mason_tools = {
+	"vtsls",
+	"angular-language-server",
+	"css-lsp",
+	"tailwindcss-language-server",
+	"yaml-language-server",
+	"lua-language-server",
+	"prettier",
+	"stylua",
+}
+
+vim.defer_fn(function()
+	local registry = require("mason-registry")
+	registry.refresh(function()
+		for _, tool in ipairs(mason_tools) do
+			local ok, pkg = pcall(registry.get_package, tool)
+			if ok and not pkg:is_installed() then
+				pkg:install():once("install:success", function()
+					vim.schedule(function()
+						vim.notify("mason: installed " .. tool)
+					end)
+				end)
+			end
+		end
+	end)
+end, 100)
+
+-- Diagnostics ----------------------------------------------------------------
+vim.diagnostic.config({
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	virtual_text = { spacing = 4, source = "if_many", prefix = "●" },
+	float = { source = "if_many" },
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+		},
+	},
+})
+
+-- Servers ----------------------------------------------------------------
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
+
+vim.lsp.enable({
+	-- Ruby / Rails: ruby-lsp (gem-installed via mise; auto-loads its Rails
+	-- addon in Rails apps). Replaced solargraph, whose gem indexing blocked
+	-- definition requests for minutes per session.
+	"ruby_lsp",
+	"vtsls", -- TypeScript (see lsp/vtsls.lua for Angular wiring)
+	"angularls",
+	"cssls",
+	"tailwindcss",
+	"yamlls",
+	"lua_ls", -- settings come from .luarc.json per project
+})
+
+-- Buffer-local keymaps and features on attach ------------------------------
+-- (grn = rename, gra = code action, grr = references are nvim defaults)
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("user_lsp_attach", { clear = true }),
+	callback = function(ev)
+		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+		local function map(lhs, rhs, desc)
+			vim.keymap.set("n", lhs, rhs, { buffer = ev.buf, desc = desc })
+		end
+
+		-- Note: don't gate these on client:supports_method() — solargraph
+		-- registers capabilities dynamically *after* attach, so the check
+		-- is false here even though the server supports it.
+		local builtin = require("telescope.builtin")
+		map("gd", function()
+			builtin.lsp_definitions({ reuse_win = false })
+		end, "Goto Definition")
+		map("gr", builtin.lsp_references, "References")
+		map("gI", builtin.lsp_implementations, "Goto Implementation")
+		map("gy", builtin.lsp_type_definitions, "Goto Type Definition")
+
+		if client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+		end
+	end,
+})

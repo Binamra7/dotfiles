@@ -1,80 +1,107 @@
-return {
-	-- Incremental rename
-	{
-		"smjonas/inc-rename.nvim",
-		cmd = "IncRename",
-		config = true,
+-- Completion (blink.cmp) ---------------------------------------------------
+require("blink.cmp").setup({
+	keymap = { preset = "enter" },
+	completion = {
+		documentation = { auto_show = true },
 	},
-
-	-- Go forward/backward with square brackets
-	{
-		"nvim-mini/mini.bracketed",
-		event = "BufReadPost",
-		config = function()
-			local bracketed = require("mini.bracketed")
-			bracketed.setup({
-				file = { suffix = "" },
-				window = { suffix = "" },
-				quickfix = { suffix = "" },
-				yank = { suffix = "" },
-				treesitter = { suffix = "n" },
-			})
-		end,
+	signature = { enabled = true },
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer" },
 	},
+	fuzzy = { implementation = "prefer_rust_with_warning" },
+})
 
-	-- Better increase/descrease
-	{
-		"monaqa/dial.nvim",
-    -- stylua: ignore
-    keys = {
-      { "<C-a>", function() return require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
-      { "<C-x>", function() return require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
-    },
-		config = function()
-			local augend = require("dial.augend")
-			require("dial.config").augends:register_group({
-				default = {
-					augend.integer.alias.decimal,
-					augend.integer.alias.hex,
-					augend.date.alias["%Y/%m/%d"],
-					augend.constant.alias.bool,
-					augend.semver.alias.semver,
-					augend.constant.new({ elements = { "let", "const" } }),
-				},
-			})
-		end,
-	},
-
-	-- copilot
-	{
-		"zbirenbaum/copilot.lua",
-		opts = {
-			suggestion = {
-				auto_trigger = true,
-				keymap = {
-					accept = "<C-l>",
-					accept_word = "<M-l>",
-					accept_line = "<M-S-l>",
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
-				},
-			},
-			filetypes = {
-				markdown = true,
-				help = true,
-			},
+-- Copilot (ghost text) -------------------------------------------------
+require("copilot").setup({
+	suggestion = {
+		auto_trigger = true,
+		keymap = {
+			accept = "<C-l>",
+			accept_word = "<M-l>",
+			accept_line = "<M-S-l>",
+			next = "<M-]>",
+			prev = "<M-[>",
+			dismiss = "<C-]>",
 		},
 	},
+	filetypes = {
+		markdown = true,
+		help = true,
+	},
+})
 
-	-- undotree
-	{
-		"jiaoshijie/undotree",
-		opts = {
-			-- your options
-		},
-		keys = { -- load the plugin only when using it's keybinding:
-			{ "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+-- Formatting (conform) ---------------------------------------------------
+require("conform").setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		ruby = { "rubocop" },
+		javascript = { "prettier" },
+		typescript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescriptreact = { "prettier" },
+		html = { "prettier" },
+		htmlangular = { "prettier" },
+		css = { "prettier" },
+		scss = { "prettier" },
+		json = { "prettier" },
+		jsonc = { "prettier" },
+		yaml = { "prettier" },
+		markdown = { "prettier" },
+	},
+	formatters = {
+		rubocop = {
+			-- Only format when the project has a rubocop config
+			condition = function(_, ctx)
+				return vim.fs.find({ ".rubocop.yml" }, { path = ctx.filename, upward = true })[1]
+			end,
+			-- rubocop -A (auto-correct all) through the rubocop daemon
+			args = { "--server", "--auto-correct-all", "--stderr", "--stdin", "$FILENAME" },
 		},
 	},
-}
+	format_on_save = function(bufnr)
+		if vim.g.autoformat == false or vim.b[bufnr].autoformat == false then
+			return
+		end
+		return { timeout_ms = 3000, lsp_format = "fallback" }
+	end,
+})
+vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+	require("conform").format({ lsp_format = "fallback" })
+end, { desc = "Format" })
+
+-- Auto pairs ---------------------------------------------------------------
+require("mini.pairs").setup()
+
+-- Bracket navigation ([b ]b buffers, [q ]q quickfix, [n ]n treesitter, ...)
+require("mini.bracketed").setup({
+	file = { suffix = "" },
+	window = { suffix = "" },
+	quickfix = { suffix = "" },
+	yank = { suffix = "" },
+	treesitter = { suffix = "n" },
+})
+
+-- Better increment/decrement (<C-a>/<C-x>) ---------------------------------
+local augend = require("dial.augend")
+require("dial.config").augends:register_group({
+	default = {
+		augend.integer.alias.decimal,
+		augend.integer.alias.hex,
+		augend.date.alias["%Y/%m/%d"],
+		augend.constant.alias.bool,
+		augend.semver.alias.semver,
+		augend.constant.new({ elements = { "let", "const" } }),
+	},
+})
+vim.keymap.set("n", "<C-a>", function()
+	return require("dial.map").inc_normal()
+end, { expr = true, desc = "Increment" })
+vim.keymap.set("n", "<C-x>", function()
+	return require("dial.map").dec_normal()
+end, { expr = true, desc = "Decrement" })
+
+-- Undotree -----------------------------------------------------------------
+require("undotree").setup()
+vim.keymap.set("n", "<leader>u", function()
+	require("undotree").toggle()
+end, { desc = "Undotree" })
