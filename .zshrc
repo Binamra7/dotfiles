@@ -3,12 +3,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
-
 ZSH_THEME="robbyrussell"
 
 source $ZSH/oh-my-zsh.sh
-
-source ~/.zsh_profile
 
 # aliases
 alias nv=nvim
@@ -20,7 +17,6 @@ alias firefox=ff
 alias ffs='ff --search'
 
 alias cd..="cd .."
-alias bat=batcat
 alias copy='xclip -selection clipboard <'
 alias reload!='. ~/.zshrc'
 alias sudo='sudo '
@@ -51,52 +47,43 @@ alias d3u='docker compose down && docker compose up'
 # tmux aliases
 alias tmk='tmux kill-session -t'
 
+# Powerlevel10k theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# zoxide
 eval "$(zoxide init zsh)"
 
+# SSH agent (start only if not running)
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  eval "$(ssh-agent -s)" >/dev/null
+  ssh-add ~/.ssh/gitlab-bajra >/dev/null 2>&1
+  ssh-add ~/.ssh/gitlab-local >/dev/null 2>&1
+  ssh-add ~/.ssh/id_ed25519 >/dev/null 2>&1
+fi
 
-# Start the SSH agent and add the GitLab key
-eval "$(ssh-agent -s)" >/dev/null 2>&1
-ssh-add ~/.ssh/gitlab-bajra >/dev/null 2>&1
-ssh-add ~/.ssh/gitlab-local>/dev/null 2>&1
-ssh-add ~/.ssh/id_ed25519>/dev/null 2>&1
-
-# Set the default editor to nvim
+# Default editor
 export EDITOR=nvim
 
-
-# Load Angular CLI autocompletion.
-# source <(ng completion script)
-
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVIM_LOG_FILE=/dev/null
-
 
 # External Display
 alias hdmi='xrandr --output HDMI-1 --right-of eDP-1 --auto'
 alias hdmioff='xrandr --output HDMI-1 --off'
 
-export PATH=/home/bajra/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/opt/nvim-linux-x86_64/bin:/$HOME/.local/bin
-
+# NVM setup (let it manage Node path)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
-export PATH="$PATH:/opt"
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-eval "$(rbenv init -)"
-
+# Clean PATH (fixed order, no duplicates, no hardcoded node path)
+export PATH="$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$HOME/.local/bin:/opt/nvim-linux-x86_64/bin:/opt:/usr/games:/usr/local/games:/snap/bin"
 
 # Terminal history manager
-. "$HOME/.atuin/bin/env"
-
 eval "$(atuin init zsh)"
+
+# mise
+eval "$(mise activate zsh)"
