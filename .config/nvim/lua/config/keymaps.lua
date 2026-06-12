@@ -122,6 +122,9 @@ end, { desc = "Git Blame Line" })
 keymap.set({ "n", "x" }, "<leader>go", function()
 	Snacks.gitbrowse()
 end, { desc = "Open in Browser" })
+keymap.set("n", "<leader>gd", function()
+	Snacks.picker.git_diff()
+end, { desc = "Git Diff (hunks)" })
 
 -- Session
 keymap.set("n", "<leader>qs", function()

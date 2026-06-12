@@ -63,6 +63,24 @@ require("bufferline").setup({
 	},
 })
 
+-- Which-key: popup with available keybindings after pressing a prefix
+require("which-key").setup({
+	preset = "helix", -- same look LazyVim used
+	spec = {
+		{ "<leader>b", group = "buffer" },
+		{ "<leader>c", group = "code" },
+		{ "<leader>f", group = "file/find" },
+		{ "<leader>g", group = "git" },
+		{ "<leader>gh", group = "hunks" },
+		{ "<leader>q", group = "quit/session" },
+		{ "<leader>t", group = "toggle/buffers" },
+		{ "[", group = "prev" },
+		{ "]", group = "next" },
+		{ "g", group = "goto" },
+		{ "s", group = "windows/browser" },
+	},
+})
+
 -- Zen mode
 require("zen-mode").setup({
 	plugins = {

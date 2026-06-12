@@ -59,6 +59,7 @@ vim.pack.add({
 	{ src = gh("jiaoshijie/undotree") },
 
 	-- ui
+	{ src = gh("folke/which-key.nvim") },
 	{ src = gh("nvim-mini/mini.icons") },
 	{ src = gh("folke/snacks.nvim") },
 	{ src = gh("nvim-lualine/lualine.nvim") },
