@@ -60,8 +60,10 @@ vim.lsp.config("*", {
 -- in projects pinning an older Ruby. The ruby-lsp gem must be installed in
 -- each mise Ruby. NOTE: this must be an explicit vim.lsp.config() call — an
 -- lsp/ruby_lsp.lua file loses the cmd key to nvim-lspconfig's own file.
+-- --use-launcher: boot gracefully when project gems aren't installed locally
+-- (gems live in Docker containers here); project-code navigation still works.
 vim.lsp.config("ruby_lsp", {
-	cmd = { "mise", "x", "--", "ruby-lsp" },
+	cmd = { "mise", "x", "--", "ruby-lsp", "--use-launcher" },
 })
 
 vim.lsp.enable({
