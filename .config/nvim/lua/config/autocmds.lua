@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- Close utility windows with q
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("close_with_q"),
-	pattern = { "help", "qf", "man", "checkhealth", "grug-far", "undotree" },
+	pattern = { "help", "qf", "man", "checkhealth", "gitsigns-blame", "undotree" },
 	callback = function(ev)
 		vim.bo[ev.buf].buflisted = false
 		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = ev.buf, silent = true })
