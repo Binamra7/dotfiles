@@ -49,6 +49,7 @@ vim.pack.add({
 	{ src = gh("folke/flash.nvim") },
 	{ src = gh("stevearc/oil.nvim") },
 	{ src = gh("lewis6991/gitsigns.nvim") },
+	{ src = gh("sindrets/diffview.nvim") },
 	{ src = gh("folke/persistence.nvim") },
 	{ src = gh("brenoprata10/nvim-highlight-colors") },
 

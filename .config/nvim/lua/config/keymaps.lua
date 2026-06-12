@@ -116,15 +116,23 @@ keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 keymap.set("n", "<leader>gg", function()
 	Snacks.lazygit()
 end, { desc = "Lazygit" })
-keymap.set("n", "<leader>gb", function()
+keymap.set("n", "<leader>gb", "<cmd>Gitsigns blame<cr>", { desc = "Blame Buffer (author per line)" })
+keymap.set("n", "<leader>gl", function()
 	Snacks.git.blame_line()
-end, { desc = "Git Blame Line" })
+end, { desc = "Blame Line (popup)" })
 keymap.set({ "n", "x" }, "<leader>go", function()
 	Snacks.gitbrowse()
 end, { desc = "Open in Browser" })
 keymap.set("n", "<leader>gd", function()
-	Snacks.picker.git_diff()
-end, { desc = "Git Diff (hunks)" })
+	-- toggle diffview
+	if next(require("diffview.lib").views) then
+		vim.cmd("DiffviewClose")
+	else
+		vim.cmd("DiffviewOpen")
+	end
+end, { desc = "Diff View (toggle)" })
+keymap.set("n", "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", { desc = "File History" })
+keymap.set("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<cr>", { desc = "Toggle Inline Blame" })
 
 -- Session
 keymap.set("n", "<leader>qs", function()

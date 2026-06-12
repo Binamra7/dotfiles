@@ -108,6 +108,9 @@ require("gitsigns").setup({
 	end,
 })
 
+-- Diffview: proper diff UI (:DiffviewOpen) and file history ---------------
+require("diffview").setup({})
+
 -- Sessions -------------------------------------------------------------
 require("persistence").setup()
 

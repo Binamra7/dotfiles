@@ -32,6 +32,28 @@ require("snacks").setup({
 })
 
 -- Statusline
+local function macro_recording()
+	local reg = vim.fn.reg_recording()
+	return reg ~= "" and ("recording @" .. reg) or ""
+end
+
+-- statusline doesn't redraw on its own when recording starts/stops
+vim.api.nvim_create_autocmd("RecordingEnter", {
+	group = vim.api.nvim_create_augroup("user_macro_status", { clear = true }),
+	callback = function()
+		require("lualine").refresh()
+	end,
+})
+vim.api.nvim_create_autocmd("RecordingLeave", {
+	group = "user_macro_status",
+	callback = function()
+		-- reg_recording() is still set during the event; refresh just after
+		vim.defer_fn(function()
+			require("lualine").refresh()
+		end, 50)
+	end,
+})
+
 require("lualine").setup({
 	options = {
 		theme = "auto", -- derives from the active colorscheme
@@ -46,7 +68,10 @@ require("lualine").setup({
 			{ "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
 			{ "filename", path = 1, symbols = { modified = " ●", readonly = " 󰌾" } },
 		},
-		lualine_x = { "diff" },
+		lualine_x = {
+			{ macro_recording, color = { fg = "#f38ba8", gui = "bold" } },
+			"diff",
+		},
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},
