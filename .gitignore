@@ -1,0 +1,20 @@
+# Editor / OS noise
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Tool output
+graphify-out/
+
+# ruby-lsp per-project generated bundle (composed by the editor, not a dotfile)
+.ruby-lsp/
+
+# Claude Code machine-local settings & run artifacts.
+# Shared settings (.claude/settings.json) stay tracked; only *.local.json and
+# per-session run state are ignored.
+.claude/settings.local.json
+**/.claude/settings.local.json
+.claude/plans/
+.claude/projects/
+.claude/todos/
