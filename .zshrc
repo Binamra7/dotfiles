@@ -48,6 +48,17 @@ path=(
 )
 
 # =============================================================================
+# Host profile — this .zshrc is shared between an Arch desktop (Hyprland /
+# Wayland) and a Debian work box (i3 / X11). Detect the distro once so the few
+# genuinely platform-specific aliases below can branch on it.
+# =============================================================================
+if [[ -r /etc/os-release ]] && grep -q '^ID=arch' /etc/os-release; then
+  _host_distro=arch
+else
+  _host_distro=debian
+fi
+
+# =============================================================================
 # Aliases
 # =============================================================================
 alias nv=nvim
@@ -77,21 +88,30 @@ alias ltree='lsd --tree'          # tree view
 alias ltreea='lsd --tree -a'      # tree view, all
 alias lt2='lsd --tree --depth 2'  # tree, limited to 2 levels
 
-# Clipboard (Wayland)
-alias xc='wl-copy'
-alias copy='wl-copy <'
+# Clipboard / screen-lock / external display — Wayland (Hyprland, Arch) vs
+# X11 (i3, Debian). Adjust output names to match `hyprctl monitors all` /
+# `xrandr` if your HDMI port reports something other than HDMI-A-1 / HDMI-1.
+if [[ "$_host_distro" == arch ]]; then
+  alias xc='wl-copy'
+  alias copy='wl-copy <'
+  alias lock='hyprlock'
+  alias hdmi='hyprctl keyword monitor "HDMI-A-1,preferred,auto-right,1"'
+  alias hdmioff='hyprctl keyword monitor "HDMI-A-1,disable"'
+  # brightnessctl needs no sudo with the standard udev rules
+  alias bu='brightnessctl set 50%'
+  alias bd='brightnessctl set 5%'
+else
+  alias xc='xclip -selection clipboard'
+  alias copy='xclip -selection clipboard <'
+  alias lock='i3lock -c 000000'
+  alias hdmi='xrandr --output HDMI-1 --right-of eDP-1 --auto'
+  alias hdmioff='xrandr --output HDMI-1 --off'
+  alias bu='sudo brightnessctl set 50000'
+  alias bd='sudo brightnessctl set 5000'
+fi
 
-# Screen lock (Hyprland)
-alias lock='hyprlock'
-
-# Brightness control (brightnessctl needs no sudo with the standard udev rules)
-alias bu='brightnessctl set 50%'
-alias bd='brightnessctl set 5%'
-
-# External display (Hyprland). Adjust the output name to match
-# `hyprctl monitors all` if your HDMI port reports something other than HDMI-A-1.
-alias hdmi='hyprctl keyword monitor "HDMI-A-1,preferred,auto-right,1"'
-alias hdmioff='hyprctl keyword monitor "HDMI-A-1,disable"'
+# Debian ships bat as `batcat`
+[[ "$_host_distro" == debian ]] && (( $+commands[batcat] )) && alias bat='batcat'
 
 # Docker
 alias d3u='docker compose down && docker compose up'
@@ -118,6 +138,14 @@ if [[ -z "${SSH_AUTH_SOCK:-}" ]] && ! pgrep -u "$USER" ssh-agent >/dev/null; the
     [[ -f "$key" && "$key" != *.pub ]] && ssh-add "$key" >/dev/null 2>&1
   done
 fi
+
+# =============================================================================
+# Per-machine overrides — untracked (gitignored). Put anything that genuinely
+# differs per host here: work-only PATH/env, company proxy, nvm/rbenv shims if
+# that box hasn't migrated to mise, etc. Sourced after tool init so it can
+# override aliases and prepend PATH.
+# =============================================================================
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # =============================================================================
 # Powerlevel10k prompt — keep last.

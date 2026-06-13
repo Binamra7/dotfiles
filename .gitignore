@@ -7,6 +7,9 @@
 # Tool output
 graphify-out/
 
+# Per-machine zsh overrides (work PATH/env, proxy, nvm/rbenv shims) — never tracked
+.zshrc.local
+
 # ruby-lsp per-project generated bundle (composed by the editor, not a dotfile)
 .ruby-lsp/
 

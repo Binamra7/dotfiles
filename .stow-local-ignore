@@ -1,8 +1,10 @@
 # Files in the repo root that must NOT be symlinked into $HOME by `stow .`
 # (stow treats each line as a Perl regex; no slash => matched against basename)
 
-# Hand-maintained Arch package manifest — documentation/backup, not a config
-user_packages.list
+# Package manifests — documentation/backup, not configs. Covers the Arch
+# (user_packages.list), Debian apt (apt_packages.list) and dpkg dump
+# (packages.list) lists; the trailing pattern matches all three by basename.
+.*packages\.list
 
 # Claude Code project tooling — tracked in git, but lives in the repo, not $HOME
 CLAUDE\.md
