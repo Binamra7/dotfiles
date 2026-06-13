@@ -25,7 +25,7 @@ telescope.setup({
 	},
 })
 pcall(telescope.load_extension, "fzf")
-telescope.load_extension("file_browser")
+pcall(telescope.load_extension, "file_browser")
 
 -- Flash (mapped to f / S in config/keymaps.lua; native s stays untouched) ----
 require("flash").setup({
