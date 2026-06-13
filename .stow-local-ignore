@@ -1,0 +1,19 @@
+# Files in the repo root that must NOT be symlinked into $HOME by `stow .`
+# (stow treats each line as a Perl regex; no slash => matched against basename)
+
+# Hand-maintained package manifests — documentation/backup, not a config.
+# This branch is the Ubuntu/i3 host, so apt_packages.list is the live manifest;
+# user_packages.list / packages.list are kept ignored too (harmless).
+apt_packages.list
+user_packages.list
+packages.list
+
+# Claude Code project tooling — tracked in git, but lives in the repo, not $HOME
+CLAUDE\.md
+\.claude
+
+# Repo metadata / generated artifacts — belong to the repo, not $HOME
+README\.md
+\.gitignore
+\.ruby-lsp
+\.git
