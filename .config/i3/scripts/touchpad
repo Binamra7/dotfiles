@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Configure the touchpad regardless of its xinput numeric id (which is not
+# stable across reboots / re-plugs). We match every libinput touchpad device
+# by name and apply natural scrolling + tap-to-click.
+#
+# Invoked from the i3 config via `exec_always`.
+
+set -euo pipefail
+
+xinput list --name-only | grep -i 'touchpad' | while IFS= read -r device; do
+    [ -z "$device" ] && continue
+    xinput set-prop "$device" "libinput Natural Scrolling Enabled" 1 2>/dev/null || true
+    xinput set-prop "$device" "libinput Tapping Enabled" 1 2>/dev/null || true
+done
