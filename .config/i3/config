@@ -114,7 +114,6 @@ assign [class="Slack"] 10
 # External monitor setup
 workspace 1 output HDMI-1
 workspace 2 output HDMI-1
-workspace 2 output eDP-1
 workspace 4 output HDMI-1
 workspace 5 output HDMI-1
 workspace 10 output eDP-1
@@ -216,7 +215,3 @@ exec xinput set-prop 11 "libinput Tapping Enabled" 1
 exec --no-startup-id notify-send "Welcome back $USER!" -i ~/.images/icons8-dog-100.png
 exec_always --no-startup-id dunst
 exec --no-startup-id ./i3BatteryWarning
-
-
-# Lock PC
-bindsym $mod+p exec i3lock -c 000000 
