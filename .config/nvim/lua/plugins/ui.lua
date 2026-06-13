@@ -34,53 +34,15 @@ require("noice").setup({
 require("mini.icons").setup()
 MiniIcons.mock_nvim_web_devicons()
 
--- Snacks: notifier, dashboard, smooth scroll, lazygit, git browse
+-- Snacks: notifier, dashboard, lazygit, git browse
+-- (scroll + cursor animations intentionally left at default/off — see AGENTS.md)
 require("snacks").setup({
 	bigfile = { enabled = true },
 	notifier = { enabled = true, timeout = 3000 },
 	dashboard = { enabled = true },
-	scroll = {
-		enabled = not vim.g.neovide, -- Neovide scrolls natively
-		-- longer ease-in-out glide instead of the default 200ms linear
-		animate = {
-			duration = { step = 10, total = 350 },
-			easing = "inOutQuad",
-		},
-		-- keep repeats fast so holding <C-d> doesn't lag behind input
-		animate_repeat = {
-			delay = 100,
-			duration = { step = 5, total = 60 },
-			easing = "outQuad",
-		},
-	},
 	lazygit = {},
 	gitbrowse = {},
 })
-
--- Neovide-style cursor trail — terminal only; Neovide animates natively
--- (its vim.g.neovide_* settings live in config/options.lua).
--- Ghostty renders the legacy computing symbols the smear is drawn with;
--- the fallback color is needed because the background is transparent
--- (smear blends against bg otherwise).
-if not vim.g.neovide then
-	require("smear_cursor").setup({
-		legacy_computing_symbols_support = true,
-		transparent_bg_fallback_color = "#1e1e2e", -- catppuccin mocha base
-
-		-- Neovide's cursor is a fast, solid stretchy block: quick head, lagging
-		-- tail, no fade along the trail, no bounce, and it animates every frame
-		-- until it fully lands.
-		time_interval = 7, -- ~144fps draws (default 17 ≈ 60fps looks steppy)
-		stiffness = 0.8,
-		trailing_stiffness = 0.6,
-		trailing_exponent = 1.5, -- fuller wedge; default 3 is a thin streak
-		gradient_exponent = 0, -- solid trail color, no fade — like neovide
-		damping = 0.95, -- high = no rubbery overshoot
-		stiffness_insert_mode = 0.6,
-		trailing_stiffness_insert_mode = 0.6,
-		damping_insert_mode = 0.95,
-	})
-end
 
 -- Statusline
 local function macro_recording()

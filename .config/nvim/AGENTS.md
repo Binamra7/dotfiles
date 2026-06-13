@@ -59,7 +59,7 @@ windows (autocmd + diffview keymaps + gitsigns-blame filetype).
 - catppuccin mocha, transparent; lualine theme is `"auto"` (catppuccin only ships `catppuccin-<flavour>` lualine themes now, no plain `catppuccin`)
 - lualine has a custom macro-recording component (`recording @x`, red) with `RecordingEnter/Leave` refresh autocmds — the statusline doesn't redraw on its own when recording starts
 - which-key: helix preset; user relies on the leader popup for discovery
-- Animations: smear-cursor.nvim (tuned to mimic Neovide's stretchy cursor) + snacks scroll in the terminal; both are gated off under Neovide (`vim.g.neovide`), which animates natively via `vim.g.neovide_*` in `config/options.lua`. Don't enable them under Neovide — animations double up.
+- **No editor animations** — both cursor and scroll animation were removed (default behavior). smear-cursor.nvim is gone, and snacks `scroll` is left at its default (off). They were removed because in the terminal every animation frame is a full redraw, and with `scrolloff=20` (viewport scrolls on nearly every `j`) the snacks glide lagged the cursor and made spammed j/k feel glitchy. Neovide is left at its own native animation defaults (appearance-only `vim.g.neovide_*` in `config/options.lua`). If reintroducing scroll animation, pair it with a much lower `scrolloff`.
 
 ## Formatting (conform)
 
