@@ -53,13 +53,18 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 
--- Neovide: appearance only; cursor/scroll animations left at Neovide defaults
+-- Session contents (used by persistence.nvim)
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+
+-- Neovide: appearance only; cursor/scroll animations left at Neovide defaults.
+-- guifont size is per-machine: the work box (Debian) renders this font larger,
+-- so it gets a smaller pt size to match the Arch desktop's look.
 if vim.g.neovide then
+	local osrelease = vim.fn.filereadable("/etc/os-release") == 1 and table.concat(vim.fn.readfile("/etc/os-release"), "\n") or ""
+	local is_arch = osrelease:match("\nID=arch") ~= nil or osrelease:match("^ID=arch") ~= nil
+	local font_size = is_arch and 14 or 11
 	-- match ghostty's font-family/font-size/background-opacity
-	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
+	vim.o.guifont = ("JetBrainsMono Nerd Font:h%d"):format(font_size)
 	vim.o.linespace = 4 -- extra px between lines; neovide's default 0 feels cramped
 	vim.g.neovide_opacity = 0.9
 end
-
--- Session contents (used by persistence.nvim)
-vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }

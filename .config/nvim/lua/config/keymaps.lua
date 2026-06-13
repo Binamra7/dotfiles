@@ -73,6 +73,7 @@ keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next Buffer" 
 keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev Buffer" })
 keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next Buffer" })
 keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev Buffer" })
+keymap.set("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 keymap.set("n", "<leader>bd", function()
 	Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
@@ -174,13 +175,13 @@ keymap.set({ "n", "x" }, "<leader>go", function()
 	Snacks.gitbrowse()
 end, { desc = "Open in Browser" })
 keymap.set("n", "<leader>gd", function()
-	-- toggle diffview
+	-- toggle diffview, scoped to the current file (lazygit covers all-files diff)
 	if next(require("diffview.lib").views) then
 		vim.cmd("DiffviewClose")
 	else
-		vim.cmd("DiffviewOpen")
+		vim.cmd("DiffviewOpen -- %")
 	end
-end, { desc = "Diff View (toggle)" })
+end, { desc = "Diff View (current file)" })
 keymap.set("n", "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", { desc = "File History" })
 
 -- LSP & diagnostics (gd/gr/gI/gy are buffer-local, set on LspAttach in
