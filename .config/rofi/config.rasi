@@ -1,16 +1,30 @@
-configuration{
-    modi: "run,window,combi";
-    icon-theme: "Oranchelo";
+configuration {
+    /* Modes: drun = .desktop apps, run = $PATH binaries, combi = both.
+       `window` mode is omitted — it relies on wmctrl (X11) and does not
+       work under Hyprland/Wayland. */
+    modes: "drun,run,combi";
+    combi-modes: "drun,run";
+
+    /* Matching: fuzzy + fzf sort, case-insensitive. */
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+    case-sensitive: false;
+
+    /* Icons. Oranchelo is not installed here; the default theme resolves
+       hicolor app icons. For richer icons: `paru -S papirus-icon-theme`
+       then set `icon-theme: "Papirus-Dark";`. */
     show-icons: true;
-    terminal: "kitty";
     drun-display-format: "{icon} {name}";
+
+    terminal: "kitty";
     location: 0;
     disable-history: false;
-    hide-scrollbar: true;
-    display-combi: " 🖥️  All ";
-    display-run: " 🏃  Run ";
-    display-window: " 🪟  Window";
     sidebar-mode: true;
+
+    display-drun: " 󰀻  Apps ";
+    display-run:  " 󰜎  Run ";
+    display-combi: " 󰕮  All ";
 }
 
 @theme "catppuccin-mocha"

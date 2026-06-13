@@ -1,72 +1,80 @@
+/*
+ * Catppuccin Mocha — https://github.com/catppuccin/catppuccin
+ * Palette roles are distinct so selection, borders and surfaces are visible.
+ */
 * {
-    bg-col:  #1e1e2e;
-    bg-col-light: #1e1e2e;
-    border-col: #1e1e2e;
-    selected-col: #1e1e2e;
-    blue: #89b4fa;
-    fg-col: #cdd6f4;
-    fg-col2: #f38ba8;
-    grey: #6c7086;
-    width: 600;
-    font: "JetBrainsMono Nerd Font 15";
+    base:     #1e1e2e;   /* window / list background      */
+    surface0: #313244;   /* raised surfaces (buttons, msg)*/
+    surface1: #45475a;   /* selected element              */
+    blue:     #89b4fa;   /* accent (prompt, border, tabs) */
+    green:    #a6e3a1;   /* active state                  */
+    red:      #f38ba8;   /* urgent state                  */
+    fg-col:   #cdd6f4;   /* primary text                  */
+    grey:     #6c7086;   /* muted text / placeholder      */
+
+    width:   600px;
+    font:    "JetBrainsMono Nerd Font 15";
 }
 
-element-text, element-icon , mode-switcher {
+element-text, element-icon, mode-switcher {
     background-color: inherit;
     text-color:       inherit;
 }
 
 window {
-    height: 360px;
-    border: 3px;
-    border-color: @border-col;
-    background-color: @bg-col;
+    width:            @width;
+    height:           360px;
+    border:           3px;
+    border-color:     @blue;
+    border-radius:    10px;
+    background-color: @base;
 }
 
 mainbox {
-    background-color: @bg-col;
+    background-color: @base;
 }
 
 inputbar {
-    children: [prompt,entry];
-    background-color: @bg-col;
-    border-radius: 5px;
-    padding: 2px;
+    children:         [ prompt, entry ];
+    background-color: @base;
+    border-radius:    5px;
+    padding:          2px;
 }
 
 prompt {
     background-color: @blue;
-    padding: 6px;
-    text-color: @bg-col;
-    border-radius: 3px;
-    margin: 20px 0px 0px 20px;
-}
-
-textbox-prompt-colon {
-    expand: false;
-    str: ":";
+    text-color:       @base;
+    padding:          6px;
+    border-radius:    3px;
+    margin:           20px 0px 0px 20px;
 }
 
 entry {
-    padding: 6px;
-    margin: 20px 0px 0px 10px;
-    text-color: @fg-col;
-    background-color: @bg-col;
+    background-color:  @base;
+    text-color:        @fg-col;
+    placeholder:       "Search…";
+    placeholder-color: @grey;
+    padding:           6px;
+    margin:            20px 0px 0px 10px;
+    cursor:            text;
 }
 
 listview {
-    border: 0px 0px 0px;
-    padding: 6px 0px 0px;
-    margin: 10px 0px 0px 20px;
-    columns: 2;
-    lines: 5;
-    background-color: @bg-col;
+    background-color: @base;
+    columns:          2;
+    lines:            5;
+    border:           0px;
+    padding:          6px 0px 0px;
+    margin:           10px 0px 0px 20px;
+    scrollbar:        false;
 }
 
 element {
-    padding: 5px;
-    background-color: @bg-col;
-    text-color: @fg-col  ;
+    background-color: @base;
+    text-color:       @fg-col;
+    padding:          5px;
+    border-radius:    3px;
+    cursor:           pointer;
 }
 
 element-icon {
@@ -74,37 +82,42 @@ element-icon {
 }
 
 element selected {
-    background-color:  @selected-col ;
-    text-color: @fg-col2  ;
+    background-color: @surface1;
+    text-color:       @fg-col;
 }
 
+element selected.urgent { background-color: @red;   text-color: @base; }
+element selected.active { background-color: @green; text-color: @base; }
+element urgent          { text-color: @red;   }
+element active          { text-color: @green; }
+
 mode-switcher {
-    spacing: 0;
-  }
+    spacing: 5px;
+}
 
 button {
-    padding: 10px;
-    background-color: @bg-col-light;
-    text-color: @grey;
-    vertical-align: 0.5; 
+    background-color: @surface0;
+    text-color:       @grey;
+    padding:          10px;
+    vertical-align:   0.5;
     horizontal-align: 0.5;
 }
 
 button selected {
-  background-color: @bg-col;
-  text-color: @blue;
+    background-color: @base;
+    text-color:       @blue;
 }
 
 message {
-    background-color: @bg-col-light;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 5px;
+    background-color: @surface0;
+    border-radius:    5px;
+    margin:           2px;
+    padding:          2px;
 }
 
 textbox {
-    padding: 6px;
-    margin: 20px 0px 0px 20px;
-    text-color: @blue;
-    background-color: @bg-col-light;
+    background-color: @surface0;
+    text-color:       @blue;
+    padding:          6px;
+    margin:           20px 0px 0px 20px;
 }
