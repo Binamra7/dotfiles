@@ -1,3 +1,6 @@
+# lsd color theme — referenced by `theme: custom` in ../config.yaml.
+# lsd resolves `theme: <name>` to ~/.config/lsd/themes/<name>.yaml.
+# Palette matches the solarized-ish colours used in the tmux statusline.
 user: 136
 group: 245
 permission:
