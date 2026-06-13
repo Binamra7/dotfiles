@@ -1,0 +1,154 @@
+{
+  // -------------------------------------------------------------------------
+  // Global configuration
+  // -------------------------------------------------------------------------
+  "layer": "top",
+  "position": "top",
+  "height": 26,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "disk",
+    "backlight",
+    "pulseaudio",
+    "battery",
+    "custom/dunst",
+    "custom/pacman",
+    "tray",
+    "clock#date",
+    "clock#time",
+    "network"
+  ],
+  // -------------------------------------------------------------------------
+  // Modules
+  // NOTE: icons are \uXXXX JSON escapes (ASCII, decoded by Waybar into Nerd
+  // Font glyphs). Do NOT paste literal glyphs here -- keep the \uXXXX form.
+  // -------------------------------------------------------------------------
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "show-special": false,
+    "ignore-workspaces": [
+      "(special:)?special:scratch_term"
+    ]
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "tooltip-format-activated": "Idle inhibitor active (screen stays on)",
+    "tooltip-format-deactivated": "Idle inhibitor off",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "backlight": {
+    "format": " {percent}%",
+    "interval": 2,
+    "on-scroll-up": "brightnessctl set +2%",
+    "on-scroll-down": "brightnessctl set 2%-"
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 25,
+      "critical": 15
+    },
+    "format": " {icon}  {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "tooltip": true
+  },
+  "clock#time": {
+    "interval": 1,
+    "format": "{:%H:%M:%S}",
+    "tooltip": false
+  },
+  "clock#date": {
+    "interval": 10,
+    "format": " {:%Y/%m/%d(%a)}",
+    "tooltip-format": "{:%Y %B %e (%A)}",
+    "locale": "C.UTF-8"
+  },
+  "cpu": {
+    "interval": 3,
+    "format": " {usage}% ({load})",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+  "memory": {
+    "interval": 3,
+    "format": " {}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+  "disk": {
+    "format": " {percentage_used}%",
+    "path": "/",
+    "states": {
+      "warning": 90,
+      "critical": 95
+    }
+  },
+  "network": {
+    "interval": 3,
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀 {ifname}: {ipaddr}/{cidr}",
+    "format-disconnected": "⚠  Disconnected",
+    "tooltip-format": "{ifname}: {ipaddr} (signal: {signalStrength}%)",
+    "on-click": "command -v iwgtk >/dev/null 2>&1 && iwgtk || ghostty -e iwctl"
+  },
+  "pulseaudio": {
+    "scroll-step": 2,
+    "format": "{icon}  {volume}%",
+    "format-muted": " Muted",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        ""
+      ]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip": true
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  // -------------------------------------------------------------------------
+  // Custom Modules
+  // -------------------------------------------------------------------------
+  "custom/dunst": {
+    "format": "{} ",
+    "exec": "~/.config/waybar/scripts/dunst.sh",
+    "on-click": "dunstctl set-paused toggle",
+    "restart-interval": 1
+  },
+  "custom/pacman": {
+    "format": " {} updates available",
+    "exec": "checkupdates | wc -l",
+    "exec-if": "[ -f /etc/arch-release ] && [ $(checkupdates | wc -l) -gt 0 ]",
+    "interval": 3600,
+    "signal": 8,
+    "on-click": "ghostty -e sh -c 'sudo pacman -Syu'"
+  }
+}

@@ -1,0 +1,71 @@
+# [NOTE]
+# ghostty +show-config --default --docs
+# ghostty +list-themes
+# ghostty +list-fonts
+#
+# ## Font sample
+# abcdefghijklmnopqrstuvwxyz
+# ABCDEFGHIJKLMNOPQRSTUVWXYZ
+# 0123456789 (){}[]
+# +-/= .,;:!? #&$%@ß|^~
+#
+# ## Ligatures:
+# <!-- -- != := === >= >- >=>
+# |-> -> <$> </> #[ ||> |=
+# ~@ ~- ~=
+#
+# ##Berkeley Mono Stylistic Sets:
+# calt: Ligatures
+# ss01: Slashed zero (0 with slash)
+# ss02: Dotted zero (0 with dot)
+# ss03: Gap zero (0 with gap/opening)
+# ss04: Slashed zero + slashed 7
+# ss05: Dotted zero + slashed 7
+# ss06: Gap zero + slashed 7
+#
+# wght 100-900
+# wdth 60-100
+# slnt 0 -16
+
+background-opacity = 0.9
+# Remove the window border and title bar to mimic your i3/Kitty setup
+window-decoration = false
+
+adjust-box-thickness           = -1
+adjust-cursor-thickness        = 0
+adjust-overline-thickness      = -1
+adjust-strikethrough-thickness = -1
+adjust-underline-thickness     = -1
+auto-update                    = check
+clipboard-read                 = allow
+copy-on-select                 = clipboard
+font-family = Jetbrains Mono Nerd Font
+# font-family = Ioskeley Mono
+font-size                      = 14
+font-synthetic-style           = false
+font-feature                   = +calt
+# font-variation                 = wdth = 100
+# font-variation                 = wght = 450
+# font-variation-bold            = wght = 700
+# font-variation-bold-italic     = wght = 700
+# font-variation-italic          = wght = 450
+mouse-hide-while-typing        = true
+mouse-shift-capture            = false
+quit-after-last-window-closed  = true
+scrollback-limit               = 25000000
+split-divider-color            = 808080
+theme                          = tokyonight_storm
+unfocused-split-opacity        = 100
+window-colorspace              = display-p3
+window-height                  = 42
+window-padding-balance         = true
+window-save-state              = always
+window-step-resize             = true
+window-theme                   = system
+window-width                   = 120
+
+# Disable notifications for clipboard copy actions to avoid distractions
+app-notifications              = no-clipboard-copy
+
+# --- Shell ---
+command = /bin/zsh --login

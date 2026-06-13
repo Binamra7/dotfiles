@@ -1,11 +1,11 @@
-if vim.loader then
-	vim.loader.enable()
-end
+vim.loader.enable()
 
-vim.cmd([[
-  highlight NeoTreeNormal guibg=NONE
-  highlight NeoTreeNormalNC guibg=NONE
-  highlight NeoTreeEndOfBuffer guibg=NONE
-]])
+-- Leaders must be set before any keymaps/plugins
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
-require("config.lazy")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+require("plugins") -- vim.pack + plugin setup
+require("config.lsp") -- native LSP: servers, diagnostics, attach keymaps
