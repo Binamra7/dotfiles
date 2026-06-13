@@ -57,14 +57,22 @@ vim.opt.writebackup = false
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 -- Neovide: appearance only; cursor/scroll animations left at Neovide defaults.
--- guifont size is per-machine: the work box (Debian) renders this font larger,
--- so it gets a smaller pt size to match the Arch desktop's look.
+-- Single font size across machines (matches ghostty's h14). The Debian/i3 box
+-- previously needed a smaller pt size because winit auto-scaled ~1.48x from the
+-- eDP panel's EDID DPI; that is fixed at the root with WINIT_X11_SCALE_FACTOR=1
+-- (set on the `neovide` alias in .zshrc), so true scale applies everywhere.
 if vim.g.neovide then
-	local osrelease = vim.fn.filereadable("/etc/os-release") == 1 and table.concat(vim.fn.readfile("/etc/os-release"), "\n") or ""
-	local is_arch = osrelease:match("\nID=arch") ~= nil or osrelease:match("^ID=arch") ~= nil
-	local font_size = is_arch and 14 or 11
-	-- match ghostty's font-family/font-size/background-opacity
-	vim.o.guifont = ("JetBrainsMono Nerd Font:h%d"):format(font_size)
+	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
 	vim.o.linespace = 4 -- extra px between lines; neovide's default 0 feels cramped
 	vim.g.neovide_opacity = 0.9
+	-- On X11 (the Debian/i3 box) neovide's winit layer auto-scales ~1.48x from
+	-- the eDP panel's EDID DPI (~142 → /96), opening the GUI ~150% too big.
+	-- Cancel it here in-config so the fix applies however neovide is launched
+	-- (terminal, file manager, desktop entry) — WINIT_X11_SCALE_FACTOR=1 only
+	-- reaches shell-launched neovide. Wayland (Hyprland/Arch) reports correct
+	-- scale, so leave it at 1.0 there. Tune the divisor if a different monitor
+	-- renders too big/small.
+	if (vim.env.XDG_SESSION_TYPE or ""):lower() == "x11" then
+		vim.g.neovide_scale_factor = 1 / 1.48
+	end
 end

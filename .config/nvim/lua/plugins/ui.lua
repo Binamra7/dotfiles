@@ -39,7 +39,16 @@ MiniIcons.mock_nvim_web_devicons()
 require("snacks").setup({
 	bigfile = { enabled = true },
 	notifier = { enabled = true, timeout = 3000 },
-	dashboard = { enabled = true },
+	dashboard = {
+		enabled = true,
+		-- This config uses vim.pack, not lazy.nvim, so snacks' default "startup"
+		-- section (which require()s lazy.stats) throws on launch. Use explicit
+		-- sections without it.
+		sections = {
+			{ section = "header" },
+			{ section = "keys", gap = 1, padding = 1 },
+		},
+	},
 	lazygit = {},
 	gitbrowse = {},
 })
