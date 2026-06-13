@@ -66,6 +66,7 @@ vim.pack.add({
 	{ src = gh("folke/which-key.nvim") },
 	{ src = gh("nvim-mini/mini.icons") },
 	{ src = gh("folke/snacks.nvim") },
+	{ src = gh("sphamba/smear-cursor.nvim") },
 	{ src = gh("nvim-lualine/lualine.nvim") },
 	{ src = gh("akinsho/bufferline.nvim") },
 	{ src = gh("folke/zen-mode.nvim") },

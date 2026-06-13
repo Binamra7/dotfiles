@@ -53,5 +53,17 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 
+-- Neovide: use its native animations (smear-cursor and snacks scroll are
+-- gated off under Neovide in plugins/ui.lua to avoid doubled-up animation)
+if vim.g.neovide then
+	-- match ghostty's font-family/font-size/background-opacity
+	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
+	vim.o.linespace = 4 -- extra px between lines; neovide's default 0 feels cramped
+	vim.g.neovide_opacity = 0.9
+	vim.g.neovide_cursor_animation_length = 0.13 -- snappy, matches the smear-cursor tuning
+	vim.g.neovide_cursor_trail_size = 0.8
+	vim.g.neovide_scroll_animation_length = 0.35 -- matches snacks scroll 350ms
+end
+
 -- Session contents (used by persistence.nvim)
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
