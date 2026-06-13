@@ -49,9 +49,8 @@
 
 /* The whole bar */
 window#waybar {
-  background-color: #222222; /* Sway palette: unfocused/background */
-  color: #ffffff; /* Sway palette: focused/text */
   background: transparent;
+  color: #ffffff;
 }
 
 /* -----------------------------------------------------------------------------
@@ -62,25 +61,16 @@ window#waybar {
 #battery,
 #clock,
 #cpu,
-#custom-primary,
-#custom-clipboard,
-#custom-keyboard-layout,
 #custom-dunst,
 #custom-pacman,
-#custom-uptime,
 #idle_inhibitor,
 #disk,
 #memory,
-#mode,
 #network,
 #pulseaudio,
 #temperature,
 #tray {
   margin-left: 18px;
-}
-
-#backlight {
-  /* No styles */
 }
 
 #battery {
@@ -107,17 +97,9 @@ window#waybar {
   animation-duration: 2s;
 }
 
-#clock {
-  /* No styles */
-}
-
 #clock.time {
   margin-left: 12px;
   min-width: 60px;
-}
-
-#cpu {
-  /* No styles */
 }
 
 #cpu.warning {
@@ -128,20 +110,16 @@ window#waybar {
   color: red;
 }
 
-#custom-keyboard-layout {
-  margin-left: 22px;
-}
-
-#disk {
-  /* No styles */
-}
-
 #disk.warning {
   color: orange;
 }
 
 #disk.critical {
   color: red;
+}
+
+#idle_inhibitor.activated {
+  color: #c5841a;
 }
 
 #memory {
@@ -160,14 +138,6 @@ window#waybar {
   animation-duration: 2s;
 }
 
-#mode {
-  color: #ffffff; /* Sway palette: urgent/text */
-  background-color: #900000; /* Sway palette: urgent/background */
-  margin-left: 0;
-  /* To compensate for the top border and still have vertical centering */
-  /* padding: 0 16px; */
-}
-
 #network {
   margin-right: 12px;
 }
@@ -176,49 +146,22 @@ window#waybar {
   color: orange;
 }
 
-#pulseaudio {
-  /* No styles */
-}
-
-#pulseaudio.muted {
-  /* No styles */
-}
-
-#temperature {
-  /* No styles */
-}
-
 #temperature.critical {
   color: red;
 }
 
-#tray {
-  /* No styles */
-}
-
-#window {
-  margin-left: 32px;
-  margin-right: 32px;
-}
+/* -----------------------------------------------------------------------------
+ * Workspaces (hyprland/workspaces emits: active, empty, urgent, visible, ...)
+ * -------------------------------------------------------------------------- */
 
 #workspaces {
   font-weight: bold;
 }
 
-#workspaces .active * {
-  /* background-color: rgba(0x5f, 0x67, 0x6a, 0.5); */
-  /* color: #c5841a; */
-  background-color: white;
-  color: #222222;
-}
-
 #workspaces button {
-  /* border-top: 2px solid transparent; */
-  /* To compensate for the top border and still have vertical centering */
-  /* padding-top: 2px; */
   padding-left: 4px;
   padding-right: 4px;
-  color: #888888; /* Sway palette: unfocused/text */
+  color: #888888; /* inactive workspace */
 }
 
 #workspaces button:hover {
@@ -228,20 +171,12 @@ window#waybar {
   text-shadow: inherit;
 }
 
-#workspaces button.visible {
-  border-color: #333333; /* Sway palette focused_inactive/border */
-  color: #ffffff; /* Sway palette: focused_inactive/text */
-  background-color: white; /* Sway palette focused_inactive/background */
-}
-
-#workspaces button.focused {
-  border-color: #4c7899; /* Sway palette: focused/border */
-  color: #ffffff; /* Sway palette: focused/text */
-  background-color: #285577; /* Sway palette: focused/background */
+#workspaces button.active {
+  color: #222222;
+  background-color: white;
 }
 
 #workspaces button.urgent {
-  border-color: #2f343a; /* Sway palette: urgent/border */
-  color: #ffffff; /* Sway palette: urgent/text */
-  background-color: #900000; /* Sway palette: urgent/background */
+  color: #ffffff;
+  background-color: #900000;
 }

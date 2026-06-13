@@ -8,13 +8,10 @@
   "modules-left": [
     "hyprland/workspaces"
   ],
-  // "modules-center": ["custom/window"],
   "modules-right": [
     "cpu",
-    "temperature",
     "memory",
     "disk",
-    "custom/keyboard-layout",
     "backlight",
     "pulseaudio",
     "battery",
@@ -23,10 +20,12 @@
     "tray",
     "clock#date",
     "clock#time",
-    "network",
+    "network"
   ],
   // -------------------------------------------------------------------------
   // Modules
+  // NOTE: icons are \uXXXX JSON escapes (ASCII, decoded by Waybar into Nerd
+  // Font glyphs). Do NOT paste literal glyphs here -- keep the \uXXXX form.
   // -------------------------------------------------------------------------
   "hyprland/workspaces": {
     "format": "{name}",
@@ -36,6 +35,15 @@
     "ignore-workspaces": [
       "(special:)?special:scratch_term"
     ]
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "tooltip-format-activated": "Idle inhibitor active (screen stays on)",
+    "tooltip-format-deactivated": "Idle inhibitor off",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
   },
   "backlight": {
     "format": " {percent}%",
@@ -49,16 +57,14 @@
       "warning": 25,
       "critical": 15
     },
-    // Connected to AC
-    "format": " {icon}  {capacity}%", // Icon: bolt
-    // Not connected to AC
+    "format": " {icon}  {capacity}%",
     "format-discharging": "{icon} {capacity}%",
     "format-icons": [
-      "", // Icon: battery-empty
-      "", // Icon: battery-quarter
-      "", // Icon: battery-half
-      "", // Icon: battery-three-quarters
-      "" // Icon: battery-full
+      "",
+      "",
+      "",
+      "",
+      ""
     ],
     "tooltip": true
   },
@@ -66,40 +72,31 @@
     "interval": 1,
     "format": "{:%H:%M:%S}",
     "tooltip": false
-    // "timezone": "Europe/Warsaw"
   },
   "clock#date": {
     "interval": 10,
-    "format": " {:%Y/%m/%d(%a)}", // Icon: calendar-alt
+    "format": " {:%Y/%m/%d(%a)}",
     "tooltip-format": "{:%Y %B %e (%A)}",
     "locale": "C.UTF-8"
-    // "timezone": "Europe/Warsaw"
   },
   "cpu": {
     "interval": 3,
-    "format": "\uf4bc {usage}% ({load})", // Icon: microchip
+    "format": " {usage}% ({load})",
     "states": {
       "warning": 70,
       "critical": 90
     }
   },
-  "idle_inhibitor": {
-    "format": "{icon} ",
-    "format-icons": {
-      "activated": "",
-      "deactivated": ""
-    }
-  },
   "memory": {
     "interval": 3,
-    "format": " {}%", // Icon: memory
+    "format": " {}%",
     "states": {
       "warning": 70,
       "critical": 90
     }
   },
   "disk": {
-    "format": "\uf0a0 {percentage_used}%",
+    "format": " {percentage_used}%",
     "path": "/",
     "states": {
       "warning": 90,
@@ -108,42 +105,29 @@
   },
   "network": {
     "interval": 3,
-    "format-wifi": "  {essid}", // Icon: wifi
-    "format-ethernet": "\udb80\ude00 {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀 {ifname}: {ipaddr}/{cidr}",
     "format-disconnected": "⚠  Disconnected",
-    "tooltip-format": "{ifname}: {ipaddr} (signal: {signalStrength}%)"
+    "tooltip-format": "{ifname}: {ipaddr} (signal: {signalStrength}%)",
+    "on-click": "command -v iwgtk >/dev/null 2>&1 && iwgtk || ghostty -e iwctl"
   },
   "pulseaudio": {
     "scroll-step": 2,
     "format": "{icon}  {volume}%",
-    "format-muted": " Muted", // Icon: volume-mute
+    "format-muted": " Muted",
     "format-icons": {
-      "headphones": "", // Icon: headphones
-      "handsfree": "", // Icon: headset
-      "headset": "", // Icon: headset
-      "phone": "", // Icon: phone
-      "portable": "", // Icon: phone
-      "car": "", // Icon: car
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
       "default": [
         "",
         ""
-      ] // Icons: volume-down, volume-up
+      ]
     },
-    "on-click": "~/.config/i3/scripts/set-default-sound-device.sh",
-    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    "tooltip": true
-  },
-  "temperature": {
-    "critical-threshold": 85,
-    "interval": 3,
-    "format": "{icon} {temperatureC}°C",
-    "format-icons": [
-      "", // Icon: temperature-empty
-      "", // Icon: temperature-quarter
-      "", // Icon: temperature-half
-      "", // Icon: temperature-three-quarters
-      "" // Icon: temperature-full
-    ],
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "tooltip": true
   },
   "tray": {
@@ -153,20 +137,6 @@
   // -------------------------------------------------------------------------
   // Custom Modules
   // -------------------------------------------------------------------------
-  "custom/primary": {
-    "format": " {}",
-    "exec": "~/.config/waybar/scripts/clipboard.sh --primary",
-    "on-click": "~/.config/waybar/scripts/clipboard.sh --toggle; pkill -SIGRTMIN+8 waybar",
-    "restart-interval": 2,
-    "escape": true
-  },
-  "custom/clipboard": {
-    "format": " {}",
-    "exec": "~/.config/waybar/scripts/clipboard.sh --clipboard",
-    "on-click": "~/.config/waybar/scripts/clipboard.sh --toggle; pkill -SIGRTMIN+8 waybar",
-    "restart-interval": 2,
-    "escape": true
-  },
   "custom/dunst": {
     "format": "{} ",
     "exec": "~/.config/waybar/scripts/dunst.sh",
@@ -178,22 +148,7 @@
     "exec": "checkupdates | wc -l",
     "exec-if": "[ -f /etc/arch-release ] && [ $(checkupdates | wc -l) -gt 0 ]",
     "interval": 3600,
-    "on-click": "checkupdates; pkill -SIGRTMIN+8 waybar"
-  },
-  "custom/nix-update": {
-    "format": " {} updates available",
-    "exec": "~/.config/waybar/scripts/check-nix-updates.sh",
-    "exec-if": "[ -f /etc/NIXOS ] && [ $(~/.config/waybar/scripts/check-nix-updates.sh) -gt 0 ]",
-    "interval": 3600,
-    "on-click": "~/.config/waybar/scripts/check-nix-updates.sh"
-  },
-  "custom/window": {
-    "exec": "~/.config/waybar/scripts/window_title.sh",
-    "interval": 1
-  },
-  "custom/uptime": {
-    "format": " {}",
-    "exec": "uptime | awk '{print $3}'|sed 's/,//'",
-    "interval": 60
+    "signal": 8,
+    "on-click": "ghostty -e sh -c 'sudo pacman -Syu'"
   }
 }
