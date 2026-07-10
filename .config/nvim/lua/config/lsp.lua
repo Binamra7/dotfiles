@@ -12,6 +12,7 @@ local mason_tools = {
 	"tailwindcss-language-server",
 	"yaml-language-server",
 	"lua-language-server",
+	"gopls",
 	"prettier",
 	"stylua",
 }
@@ -66,6 +67,14 @@ vim.lsp.config("ruby_lsp", {
 	cmd = { "mise", "x", "--", "ruby-lsp", "--use-launcher" },
 })
 
+-- gopls runs under mise so it sees the mise-managed Go toolchain (go is not on
+-- the base PATH here) even when Neovide is launched from a desktop entry rather
+-- than a mise-active shell. The gopls binary itself still comes from mason (on
+-- nvim's PATH); `mise x` only injects `go` into the PATH gopls shells out to.
+vim.lsp.config("gopls", {
+	cmd = { "mise", "x", "--", "gopls" },
+})
+
 vim.lsp.enable({
 	-- Ruby / Rails: ruby-lsp (gem-installed via mise; auto-loads its Rails
 	-- addon in Rails apps). Replaced solargraph, whose gem indexing blocked
@@ -77,6 +86,7 @@ vim.lsp.enable({
 	"tailwindcss",
 	"yamlls",
 	"lua_ls", -- settings come from .luarc.json per project
+	"gopls", -- Go (needs the Go toolchain on PATH; mason installs the gopls binary)
 })
 
 -- Buffer-local keymaps and features on attach ------------------------------

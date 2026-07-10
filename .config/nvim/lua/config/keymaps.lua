@@ -46,6 +46,18 @@ keymap.set("n", "<C-x>", function()
 	return require("dial.map").dec_normal()
 end, { expr = true, desc = "Decrement" })
 
+-- Neovide clipboard -----------------------------------------------------------
+-- Neovide has no terminal layer to handle Ctrl+Shift+C/V, so the keys reach
+-- nvim directly; unmapped, <C-S-v> simplifies to <C-v> (insert-next-key-
+-- literally), which swallows the keypress. Gated so terminal paste is untouched.
+
+if vim.g.neovide then
+	keymap.set({ "n", "v" }, "<C-S-c>", '"+y', { desc = "Copy to Clipboard" })
+	keymap.set({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from Clipboard" })
+	keymap.set({ "i", "c" }, "<C-S-v>", "<C-R><C-O>+", { desc = "Paste from Clipboard" })
+	keymap.set("t", "<C-S-v>", '<C-\\><C-N>"+pi', { desc = "Paste from Clipboard" })
+end
+
 -- Windows --------------------------------------------------------------------
 
 keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window" })

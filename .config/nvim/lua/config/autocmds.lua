@@ -42,6 +42,32 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Diagnostic underlines: undercurl (squiggly), not a flat underline.
+-- catppuccin (like most themes) defines DiagnosticUnderline* with `underline`;
+-- flip each to `undercurl` while keeping its `sp` colour. On ColorScheme so it
+-- survives theme reloads. Terminal support is already end-to-end: ghostty +
+-- tmux `usstyle` + tmux-256color `Smulx` all carry undercurl.
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = augroup("diagnostic_undercurl"),
+	callback = function()
+		for _, name in ipairs({
+			"DiagnosticUnderlineError",
+			"DiagnosticUnderlineWarn",
+			"DiagnosticUnderlineInfo",
+			"DiagnosticUnderlineHint",
+			"DiagnosticUnderlineOk",
+		}) do
+			local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+			hl.underline = nil
+			hl.undercurl = true
+			hl.cterm = hl.cterm or {}
+			hl.cterm.underline = nil
+			hl.cterm.undercurl = true
+			vim.api.nvim_set_hl(0, name, hl)
+		end
+	end,
+})
+
 -- Disable concealing in some file formats
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("conceal"),

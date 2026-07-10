@@ -2,7 +2,11 @@
   // -------------------------------------------------------------------------
   // Global configuration
   // -------------------------------------------------------------------------
-  "layer": "top",
+  // "bottom" keeps waybar's exclusive zone (tiled/maximized windows still
+  // leave room for it) but lets a true-fullscreen window — which ignores
+  // reserved zones — render over it. On "top" the bar floats above even
+  // fullscreen windows, which is why fullscreen used to need a manual toggle.
+  "layer": "bottom",
   "position": "top",
   "height": 26,
   "modules-left": [

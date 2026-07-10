@@ -65,6 +65,9 @@ if vim.g.neovide then
 	vim.o.guifont = "JetBrainsMono Nerd Font:h14"
 	vim.o.linespace = 4 -- extra px between lines; neovide's default 0 feels cramped
 	vim.g.neovide_opacity = 0.9
+	-- Bolder diagnostic undercurl (and all underlines). Default 1.0; >1.0
+	-- thickens the stroke. Dial down toward 1.0 if the squiggle clips.
+	vim.g.neovide_underline_stroke_scale = 1.8
 	-- On X11 (the Debian/i3 box) neovide's winit layer auto-scales ~1.48x from
 	-- the eDP panel's EDID DPI (~142 → /96), opening the GUI ~150% too big.
 	-- Cancel it here in-config so the fix applies however neovide is launched
