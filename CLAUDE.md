@@ -68,6 +68,9 @@ Hyprland >= 0.55 deprecates hyprlang (`.conf`) in favour of Lua; the config is
 - Gotchas: `resizeactive exact 50% 50%` has no Lua form (`SUPER+equal` computes it from the monitor
   size); `hl.dsp.reload_config` is absent in 0.56.2 (reload bind uses `exec_cmd("hyprctl reload")`);
   strings with `\n` need `[[...]]` long strings; mods are uppercase (`SUPER + SHIFT + x`).
+- Known break: waybar 0.15.0's `hyprland/workspaces` module hardcodes legacy `dispatch workspace N`, so
+  clicking a workspace does nothing under Lua (scroll works via the converted `on-scroll-*`). Needs a
+  waybar with Lua IPC (waybar-git / the `add-hyprland-lua-ipc` patch); recheck after a waybar release.
 
 ## Neovim
 
