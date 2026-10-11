@@ -1,0 +1,7 @@
+-- hyprland-next.lua: incremental Lua migration (not yet active)
+require("conf.option")
+require("conf.monitor")
+require("conf.env")
+require("conf.window_rule")
+require("conf.bind")
+require("conf.startup")

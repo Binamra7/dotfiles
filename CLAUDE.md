@@ -47,6 +47,29 @@ i3status) in new work.
   default; takes tool names to select, or `--skip <tool>`. Each tool is independent —
   failures are reported and skipped, not fatal. Verify-only flags: `--list`, `--help`.
 
+## Hyprland (Lua config)
+
+Hyprland >= 0.55 deprecates hyprlang (`.conf`) in favour of Lua; the config is
+`.config/hypr/hyprland.lua`, which `require`s `conf/{option,monitor,env,window_rule,bind,startup}.lua`
+(dir is `conf/`, not `config.d/` — a dot in a `require` name is a path separator). The old
+`hyprland.conf` + `config.d/*.conf` are kept only as a rollback until the Lua config has survived a
+re-login; when `hyprland.lua` exists it wins. `hypridle.conf`, `hyprlock.conf`, `hyprpaper.conf` stay
+hyprlang (those programs have no Lua support).
+
+- Validate before reloading: `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` — exit code is
+  always 0, pass = output contains `config ok`. It runs the file, so never call `hl.exec_cmd` outside
+  the `hl.on("hyprland.start", ...)` handler. Errors inside bind callbacks only appear on keypress.
+- Apply: `hyprctl reload`; switching between `.lua` and `.conf` needs `hyprctl reload full-reset`.
+  Check `hyprctl configerrors`. `hyprctl eval '<lua>'` works only under the Lua config.
+- `hyprctl dispatch` now takes a Lua expr (`hyprctl dispatch 'hl.dsp.dpms({ action = "off" })'`),
+  and `hyprctl keyword` is refused — use `hyprctl eval`. Callers already converted: `hypridle.conf`,
+  waybar workspace scroll, `hdmi`/`hdmioff` aliases in `.zshrc`.
+- API reference: `/usr/share/hypr/stubs/hl.meta.lua` and `/usr/share/hypr/hyprland.lua` (installed with
+  Hyprland; the wiki tracks git main and can disagree with the installed version).
+- Gotchas: `resizeactive exact 50% 50%` has no Lua form (`SUPER+equal` computes it from the monitor
+  size); `hl.dsp.reload_config` is absent in 0.56.2 (reload bind uses `exec_cmd("hyprctl reload")`);
+  strings with `\n` need `[[...]]` long strings; mods are uppercase (`SUPER + SHIFT + x`).
+
 ## Neovim
 
 `.config/nvim/` is a Neovim setup. Read any `.config/nvim/AGENTS.md` (if present) before

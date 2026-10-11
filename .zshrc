@@ -95,8 +95,8 @@ if [[ "$_host_distro" == arch ]]; then
   alias xc='wl-copy'
   alias copy='wl-copy <'
   alias lock='hyprlock'
-  alias hdmi='hyprctl keyword monitor "HDMI-A-1,preferred,auto-right,1"'
-  alias hdmioff='hyprctl keyword monitor "HDMI-A-1,disable"'
+  alias hdmi='hyprctl eval '\''hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto-right", scale = 1 })'\'''
+  alias hdmioff='hyprctl eval '\''hl.monitor({ output = "HDMI-A-1", disabled = true })'\'''
   # brightnessctl needs no sudo with the standard udev rules
   alias bu='brightnessctl set 50%'
   alias bd='brightnessctl set 5%'
