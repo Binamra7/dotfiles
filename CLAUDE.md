@@ -51,15 +51,14 @@ i3status) in new work.
 
 Hyprland >= 0.55 deprecates hyprlang (`.conf`) in favour of Lua; the config is
 `.config/hypr/hyprland.lua`, which `require`s `conf/{option,monitor,env,window_rule,bind,startup}.lua`
-(dir is `conf/`, not `config.d/` — a dot in a `require` name is a path separator). The old
-`hyprland.conf` + `config.d/*.conf` are kept only as a rollback until the Lua config has survived a
-re-login; when `hyprland.lua` exists it wins. `hypridle.conf`, `hyprlock.conf`, `hyprpaper.conf` stay
-hyprlang (those programs have no Lua support).
+(dir is `conf/`, not `config.d/` — a dot in a `require` name is a path separator). The legacy
+`hyprland.conf` + `config.d/*.conf` were removed (recoverable from git history before commit `89c38ef3`).
+`hypridle.conf`, `hyprlock.conf`, `hyprpaper.conf` stay hyprlang (those programs have no Lua support).
 
 - Validate before reloading: `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` — exit code is
   always 0, pass = output contains `config ok`. It runs the file, so never call `hl.exec_cmd` outside
   the `hl.on("hyprland.start", ...)` handler. Errors inside bind callbacks only appear on keypress.
-- Apply: `hyprctl reload`; switching between `.lua` and `.conf` needs `hyprctl reload full-reset`.
+- Apply: `hyprctl reload`.
   Check `hyprctl configerrors`. `hyprctl eval '<lua>'` works only under the Lua config.
 - `hyprctl dispatch` now takes a Lua expr (`hyprctl dispatch 'hl.dsp.dpms({ action = "off" })'`),
   and `hyprctl keyword` is refused — use `hyprctl eval`. Callers already converted: `hypridle.conf`,
