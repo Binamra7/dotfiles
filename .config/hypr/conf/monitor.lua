@@ -1,2 +1,2 @@
--- Port of config.d/monitor.conf
+-- Monitors
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })

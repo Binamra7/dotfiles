@@ -1,4 +1,4 @@
--- Port of config.d/env.conf + NVIDIA block from hyprland.conf
+-- Environment variables (incl. NVIDIA)
 local lang = os.getenv("LANG") or ""
 local home = os.getenv("HOME") or ""
 
@@ -28,7 +28,7 @@ hl.env("XMODIFIERS", "@im=fcitx")
 -- https://github.com/hyprwm/Hyprland/issues/2591
 hl.env("FCITX_DATA_HOME", home .. "/.config/fcitx5/data")
 
--- NVIDIA-specific environment variables (from hyprland.conf)
+-- NVIDIA-specific environment variables
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("GBM_BACKEND", "nvidia-drm")

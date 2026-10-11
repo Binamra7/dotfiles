@@ -1,4 +1,4 @@
--- Port of config.d/bind.conf
+-- Keybinds
 
 -- Terminal / Apps
 hl.bind("SUPER + RETURN",         hl.dsp.exec_cmd("ghostty"))

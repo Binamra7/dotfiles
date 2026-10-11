@@ -1,4 +1,4 @@
--- Port of config.d/startup.conf (exec-once -> hyprland.start; binds live here too)
+-- Startup commands (hyprland.start) and their keybinds
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")
@@ -30,7 +30,7 @@ hl.on("hyprland.start", function()
 end)
 
 -- Waybar restart
--- (legacy used `hyprctl dispatch exec waybar`; replaced by plain `waybar`)
+-- (plain `waybar`: `hyprctl dispatch exec` no longer works under the Lua config)
 hl.bind("SUPER + w", hl.dsp.exec_cmd("pkill waybar && waybar"))
 
 -- Notifications
